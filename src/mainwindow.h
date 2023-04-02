@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QDebug>
+#include "menu.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,7 +17,16 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+   void changePowerStatus(bool status);
+
+private slots:
+
+    void on_powerButton_clicked();
+
 private:
     Ui::MainWindow *ui;
+    Menu *mainMenu;
+    bool power;
+
 };
 #endif // MAINWINDOW_H
