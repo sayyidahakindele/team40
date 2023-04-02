@@ -44,9 +44,6 @@
   </property>
   <property name="styleSheet">
    <string notr="true">/*(2)*/
-color: rgb(32, 74, 135);
-background-color: rgb(32, 74, 135);
-
 /*
 (4)
 background-color: #616E7C;
@@ -537,7 +534,7 @@ QPushButton:pressed {
        </widget>
       </item>
       <item>
-       <widget class="QTabWidget" name="tabWidget">
+       <widget class="QTabWidget" name="views">
         <property name="styleSheet">
          <string notr="true">font: 75 12pt &quot;Noto Sans Adlam&quot;;</string>
         </property>
@@ -565,7 +562,23 @@ QPushButton:pressed {
          </attribute>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
-           <widget class="QListView" name="listView"/>
+           <widget class="QListWidget" name="listWidget">
+            <item>
+             <property name="text">
+              <string>Create new session</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Settings</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>History</string>
+             </property>
+            </item>
+           </widget>
           </item>
          </layout>
         </widget>
