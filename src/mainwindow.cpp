@@ -4,9 +4,8 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-//    mainMenu = new Menu("MAIN MENU", {"PROGRAMS","FREQUENCY","HISTORY"}, nullptr);
 
-    // power button toggle
+    // default settings
     ui ->views ->setVisible(false);
     ui ->battery ->setVisible(false);
     ui ->upButton ->setEnabled(false);
@@ -42,4 +41,28 @@ void MainWindow::changePowerStatus(bool status) {
     ui ->menuButton ->setEnabled(status);
     ui ->okButton ->setEnabled(status);
     ui ->backButton ->setEnabled(status);
+}
+
+
+
+void MainWindow::on_mainOptions_currentRowChanged(int currentRow)
+{
+    qDebug() << currentRow;
+    QString selected = ui ->mainOptions ->item(currentRow) ->text();
+
+    if (selected == "CREATE NEW SESSION" | selected == "SETTINGS" | selected == "HISTORY") {
+        if (selected == "CREATE NEW SESSION") {
+            qDebug() << selected;
+        } else if (selected == "SETTINGS") {
+            QListWidgetItem *challengeLevel = new QListWidgetItem("CHANGE CHALLENGE LEVEL");
+            QListWidgetItem *breathPace = new QListWidgetItem("CHANGE BREATH PACE");
+            ui ->mainOptions ->addItem(challengeLevel);
+            ui ->mainOptions ->addItem(breathPace);
+        } else if (selected == "HISTORY") {
+            QListWidgetItem *view = new QListWidgetItem("VIEW");
+            QListWidgetItem *clear = new QListWidgetItem("CLEAR");
+            ui ->mainOptions ->addItem(view);
+            ui ->mainOptions ->addItem(clear);
+        }
+    }
 }

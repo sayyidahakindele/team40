@@ -562,20 +562,23 @@ QPushButton:pressed {
          </attribute>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
-           <widget class="QListWidget" name="listWidget">
+           <widget class="QListWidget" name="mainOptions">
+            <property name="alternatingRowColors">
+             <bool>true</bool>
+            </property>
             <item>
              <property name="text">
-              <string>Create new session</string>
+              <string>CREATE NEW SESSION</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Settings</string>
+              <string>SETTINGS</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>History</string>
+              <string>HISTORY</string>
              </property>
             </item>
            </widget>
