@@ -3,9 +3,9 @@
 
 class DBManager {
 
-public:
+    public:
 
-private:
+    private:
 
 };
 

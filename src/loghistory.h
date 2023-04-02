@@ -2,10 +2,9 @@
 #define LOGHISTORY_H
 
 
-class loghistory
-{
-public:
-    loghistory();
+class loghistory {
+    public:
+        loghistory();
 };
 
 #endif // LOGHISTORY_H

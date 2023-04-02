@@ -2,10 +2,9 @@
 #define SETTINGS_H
 
 
-class settings
-{
-public:
-    settings();
+class settings {
+    public:
+        settings();
 };
 
 #endif // SETTINGS_H

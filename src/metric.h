@@ -2,10 +2,9 @@
 #define METRIC_H
 
 
-class metric
-{
-public:
-    metric();
+class metric {
+    public:
+        metric();
 };
 
 #endif // METRIC_H
