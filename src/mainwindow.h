@@ -18,12 +18,18 @@ public:
     ~MainWindow();
 
    void changePowerStatus(bool status);
+   void updateMenu(QString option);
 
 private slots:
 
     void on_powerButton_clicked();
+    void on_upButton_clicked();
+    void on_downButton_clicked();
+    void on_okButton_clicked();
 
-    void on_mainOptions_currentRowChanged(int currentRow);
+    void on_menuButton_clicked();
+
+    void on_backButton_clicked();
 
 private:
     Ui::MainWindow *ui;
