@@ -545,7 +545,7 @@ QPushButton:pressed {
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <property name="elideMode">
          <enum>Qt::ElideNone</enum>
@@ -1202,17 +1202,11 @@ font: 75 18pt &quot;Noto Sans Glagolitic&quot;;</string>
          <widget class="QSlider" name="horizontalSlider">
           <property name="geometry">
            <rect>
-            <x>120</x>
+            <x>130</x>
             <y>410</y>
-            <width>481</width>
-            <height>20</height>
+            <width>461</width>
+            <height>16</height>
            </rect>
-          </property>
-          <property name="maximum">
-           <number>60</number>
-          </property>
-          <property name="sliderPosition">
-           <number>1</number>
           </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
