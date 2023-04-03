@@ -40,7 +40,7 @@
    <enum>Qt::LeftToRight</enum>
   </property>
   <property name="autoFillBackground">
-   <bool>false</bool>
+   <bool>true</bool>
   </property>
   <property name="styleSheet">
    <string notr="true">/*(2)*/
@@ -545,7 +545,7 @@ QPushButton:pressed {
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <property name="elideMode">
          <enum>Qt::ElideNone</enum>
@@ -560,15 +560,42 @@ QPushButton:pressed {
          <attribute name="title">
           <string>Menu</string>
          </attribute>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <item>
-           <widget class="QListWidget" name="mainOptions">
-            <property name="alternatingRowColors">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <widget class="QListWidget" name="mainOptions">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>50</y>
+            <width>611</width>
+            <height>401</height>
+           </rect>
+          </property>
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+         </widget>
+         <widget class="QLabel" name="heading">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>10</y>
+            <width>611</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">/*(2)*/
+color: rgb(255, 255, 255);
+background-color:rgb(46, 52, 54);
+
+font: 75 18pt &quot;Noto Sans Glagolitic&quot;;</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
         </widget>
         <widget class="QWidget" name="sessionTab">
          <attribute name="title">
