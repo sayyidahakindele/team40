@@ -5,6 +5,14 @@
 class settings {
     public:
         settings();
+
+        //setPace()
+        //setLevel()
+
+        //getPace()
+        //getLevel
+
+        //reset()
 };
 
 #endif // SETTINGS_H

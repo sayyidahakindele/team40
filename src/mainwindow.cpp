@@ -99,6 +99,7 @@ void MainWindow::on_okButton_clicked() {
 void MainWindow::updateMenu(QString option) {
     if (option == "CREATE NEW SESSION") {   // takes you to the session view tab
         ui ->views ->setCurrentIndex(1);
+        //startSession
     } else if (option == "SETTINGS") {      // creates sub menu by clearing current items and replacing it with submenu items. sets the current row to the first one and changes the heading
         ui ->mainOptions ->clear();
         ui ->heading ->setText("SETTINGS");
