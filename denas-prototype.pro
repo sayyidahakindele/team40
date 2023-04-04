@@ -42,7 +42,8 @@ HEADERS += \
         $${source_dir}/mainwindow.h \
         $${source_dir}/metric.h \
         $${source_dir}/settings.h \
-        $${source_dir}/loghistory.h
+        $${source_dir}/loghistory.h \
+        src/defs.h
 
 FORMS += \
         $${forms_dir}/mainwindow.ui

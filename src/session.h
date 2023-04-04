@@ -8,6 +8,9 @@ class session {
 
     public:
         //session(metric *metrics, QDate date, int level);
+        // calculatepercentage
+        //  challengelevel
+        // calculateAchievement()
 
     private:
         //metric *metrics;
