@@ -3,8 +3,9 @@
 
 #include <QMainWindow>
 #include <QDebug>
-#include "database.h"
 
+#include "database.h"
+#include "settings.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -50,6 +51,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     bool power;
-
+    bool view;
+    settings setting;
 };
 #endif // MAINWINDOW_H
