@@ -4,15 +4,20 @@
 
 class settings {
     public:
-        settings();
+        //setters
+        void setPace(int pace);
+        void setLevel(int level);
 
-        //setPace()
-        //setLevel()
+        //getters
+        int getPace();
+        int getLevel();
 
-        //getPace()
-        //getLevel
+        //functions
+        void reset();
 
-        //reset()
+     private:
+         int pace = 10;
+         int level = 1;
 };
 
 #endif // SETTINGS_H

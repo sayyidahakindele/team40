@@ -23,7 +23,7 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-// on-click function: power button toggle
+// power button toggle
 void MainWindow::on_powerButton_clicked() {
     //toggles between disabled menu and main menu
     if (power == true) {
@@ -46,6 +46,98 @@ void MainWindow::on_powerButton_clicked() {
     changePowerStatus(power);
 }
 
+// up button clicked
+void MainWindow::on_upButton_clicked() {
+    int current = ui ->mainOptions ->currentRow();
+    if (current > 0) {
+        ui ->mainOptions ->setCurrentRow(current - 1);
+    } else {
+        ui ->mainOptions ->setCurrentRow(ui ->mainOptions ->count() - 1);
+    }
+}
+
+// down button clicked
+void MainWindow::on_downButton_clicked() {
+    int current = ui ->mainOptions ->currentRow();
+    if (current < ui ->mainOptions ->count() - 1) {
+        ui ->mainOptions ->setCurrentRow(current + 1);
+    } else {
+        ui ->mainOptions ->setCurrentRow(0);
+    }
+}
+
+// ok button clicked
+void MainWindow::on_okButton_clicked() {
+    QString selectedItem = ui ->mainOptions ->currentItem() ->text();
+    // updateMenu only called when a new submenu is created or a being difrected to a different menu
+    if (selectedItem == "CREATE NEW SESSION" | selectedItem == "SETTINGS" | selectedItem == "HISTORY" | selectedItem == "CHANGE CHALLENGE LEVEL" | selectedItem == "CHANGE BREATH PACE" | selectedItem == "HISTORY" | selectedItem == "RESET" | selectedItem == "CLEAR"| selectedItem == "YES" | selectedItem == "NO") {
+        updateMenu(selectedItem);
+    } else { // this covers breath and challenge. Should call a function in each one that updates the respective quality
+        QString currentTab = ui ->mainOptions ->item(0) ->text();
+        if (currentTab == "1 - BEGINNER") {
+            setting.setLevel(ui ->mainOptions ->currentRow() + 1);
+        } else if (currentTab == "1") {
+            setting.setPace(ui ->mainOptions ->currentRow() + 1);
+        }
+    }
+
+}
+
+// menu button clicked
+void MainWindow::on_menuButton_clicked() {
+    ui ->views ->setCurrentIndex(0);
+    ui ->mainOptions ->clear();
+    QListWidgetItem *session = new QListWidgetItem("CREATE NEW SESSION");
+    QListWidgetItem *settings = new QListWidgetItem("SETTINGS");
+    QListWidgetItem *history = new QListWidgetItem("HISTORY");
+    QListWidgetItem *reset = new QListWidgetItem("RESET");
+    ui ->mainOptions ->addItem(session);
+    ui ->mainOptions ->addItem(settings);
+    ui ->mainOptions ->addItem(history);
+    ui ->mainOptions ->addItem(reset);
+    ui ->mainOptions ->setCurrentRow(0);
+    ui ->heading ->setText("MAIN MENU");
+}
+
+// back button clicked
+void MainWindow::on_backButton_clicked() {
+    QString currentTab = ui ->mainOptions ->item(0) ->text();
+    if (currentTab == "1 - BEGINNER" | currentTab == "1") {
+        ui ->mainOptions ->clear();
+        ui ->heading ->setText("SETTINGS");
+        QListWidgetItem *challengeLevel = new QListWidgetItem("CHANGE CHALLENGE LEVEL");
+        QListWidgetItem *breathPace = new QListWidgetItem("CHANGE BREATH PACE");
+        ui ->mainOptions ->addItem(challengeLevel);
+        ui ->mainOptions ->addItem(breathPace);
+        ui ->mainOptions ->setCurrentRow(0);
+    } else if (currentTab == "CHANGE CHALLENGE LEVEL" | currentTab == "VIEW") {
+        ui ->mainOptions ->clear();
+        ui ->heading ->setText("MAIN MENU");
+        QListWidgetItem *session = new QListWidgetItem("CREATE NEW SESSION");
+        QListWidgetItem *settings = new QListWidgetItem("SETTINGS");
+        QListWidgetItem *history = new QListWidgetItem("HISTORY");
+        QListWidgetItem *reset = new QListWidgetItem("RESET");
+        ui ->mainOptions ->addItem(session);
+        ui ->mainOptions ->addItem(settings);
+        ui ->mainOptions ->addItem(history);
+        ui ->mainOptions ->addItem(reset);
+        ui ->mainOptions ->setCurrentRow(0);
+    } else if (currentTab == "YES") {
+        ui ->mainOptions ->clear();
+        QListWidgetItem *session = new QListWidgetItem("CREATE NEW SESSION");
+        QListWidgetItem *settings = new QListWidgetItem("SETTINGS");
+        QListWidgetItem *history = new QListWidgetItem("HISTORY");
+        QListWidgetItem *reset = new QListWidgetItem("RESET");
+        ui ->mainOptions ->addItem(session);
+        ui ->mainOptions ->addItem(settings);
+        ui ->mainOptions ->addItem(history);
+        ui ->mainOptions ->addItem(reset);
+        ui ->mainOptions ->setCurrentRow(0);
+        ui ->views ->setCurrentIndex(0);
+        ui ->heading ->setText("MAIN MENU");
+    }
+}
+
 void MainWindow::changePowerStatus(bool status) {
     ui ->views ->setVisible(status);
     ui ->battery ->setVisible(status);
@@ -56,44 +148,6 @@ void MainWindow::changePowerStatus(bool status) {
     ui ->menuButton ->setEnabled(status);
     ui ->okButton ->setEnabled(status);
     ui ->backButton ->setEnabled(status);
-}
-
-// on-click function: up button clicked
-void MainWindow::on_upButton_clicked() {
-    int current = ui ->mainOptions ->currentRow();
-    if (current > 0) {
-        ui ->mainOptions ->setCurrentRow(current - 1);
-    } else {
-        ui ->mainOptions ->setCurrentRow(ui ->mainOptions ->count() - 1);
-    }
-}
-
-// on-click function: down button clicked
-void MainWindow::on_downButton_clicked() {
-    int current = ui ->mainOptions ->currentRow();
-    if (current < ui ->mainOptions ->count() - 1) {
-        ui ->mainOptions ->setCurrentRow(current + 1);
-    } else {
-        ui ->mainOptions ->setCurrentRow(0);
-    }
-}
-
-// on-click function: ok button clicked
-void MainWindow::on_okButton_clicked() {
-    QString selectedItem = ui ->mainOptions ->currentItem() ->text();
-    // updateMenu only called when a new submenu is created or a being difrected to a different menu
-    if (selectedItem == "CREATE NEW SESSION" | selectedItem == "SETTINGS" | selectedItem == "HISTORY" | selectedItem == "CHANGE CHALLENGE LEVEL" | selectedItem == "CHANGE BREATH PACE" | selectedItem == "HISTORY" | selectedItem == "RESET" | selectedItem == "CLEAR"| selectedItem == "YES" | selectedItem == "NO") {
-        updateMenu(selectedItem);
-    } else { // this covers breath and challenge. Should call a function in each one that updates the respective quality
-        // set selected option for metric
-        QString currentTab = ui ->mainOptions ->item(0) ->text();
-        if (currentTab == "1 - BEGINNER") {
-            qDebug() << (ui ->mainOptions ->currentRow() + 1); // just for debug purposes. replace with function
-        } else if (currentTab == "1") {
-            qDebug() << (ui ->mainOptions ->currentRow() + 1); // just for debug purposes. replace with function
-        }
-    }
-
 }
 
 void MainWindow::updateMenu(QString option) {
@@ -126,7 +180,7 @@ void MainWindow::updateMenu(QString option) {
         ui ->mainOptions ->addItem(intermediate);
         ui ->mainOptions ->addItem(hard);
         ui ->mainOptions ->addItem(advanced);
-        ui ->mainOptions ->setCurrentRow(0);
+        ui ->mainOptions ->setCurrentRow(setting.getLevel() - 1);
     } else if (option == "CHANGE BREATH PACE") {        // creates sub menu by clearing current items and replacing it with submenu items. sets the current row to the first one and changes the heading
         ui ->mainOptions ->clear();
         ui ->heading ->setText("SETTINGS");
@@ -160,7 +214,7 @@ void MainWindow::updateMenu(QString option) {
         ui ->mainOptions ->addItem("28");
         ui ->mainOptions ->addItem("29");
         ui ->mainOptions ->addItem("30");
-        ui ->mainOptions ->setCurrentRow(9);
+        ui ->mainOptions ->setCurrentRow(setting.getPace() - 1);
     } else if (option == "RESET") {         // creates sub menu by clearing current items and replacing it with submenu items. sets the current row to the first one and changes the heading
         ui ->mainOptions ->clear();
         ui ->heading ->setText("ARE YOU SURE YOU WANT TO RESET?");
@@ -202,65 +256,10 @@ void MainWindow::updateMenu(QString option) {
     }
 }
 
-// on-click function: menu button clicked
-void MainWindow::on_menuButton_clicked() {          // rests to main menu
-    ui ->views ->setCurrentIndex(0);
-    ui ->mainOptions ->clear();
-    QListWidgetItem *session = new QListWidgetItem("CREATE NEW SESSION");
-    QListWidgetItem *settings = new QListWidgetItem("SETTINGS");
-    QListWidgetItem *history = new QListWidgetItem("HISTORY");
-    QListWidgetItem *reset = new QListWidgetItem("RESET");
-    ui ->mainOptions ->addItem(session);
-    ui ->mainOptions ->addItem(settings);
-    ui ->mainOptions ->addItem(history);
-    ui ->mainOptions ->addItem(reset);
-    ui ->mainOptions ->setCurrentRow(0);
-    ui ->heading ->setText("MAIN MENU");
-}
-
-// on-click function: back button clicked
-void MainWindow::on_backButton_clicked() {          // figures out what parent it should return to by checking the first item and replacing current menu with parent menu
-    QString currentTab = ui ->mainOptions ->item(0) ->text();
-    if (currentTab == "1 - BEGINNER" | currentTab == "1") {
-        ui ->mainOptions ->clear();
-        ui ->heading ->setText("SETTINGS");
-        QListWidgetItem *challengeLevel = new QListWidgetItem("CHANGE CHALLENGE LEVEL");
-        QListWidgetItem *breathPace = new QListWidgetItem("CHANGE BREATH PACE");
-        ui ->mainOptions ->addItem(challengeLevel);
-        ui ->mainOptions ->addItem(breathPace);
-        ui ->mainOptions ->setCurrentRow(0);
-    } else if (currentTab == "CHANGE CHALLENGE LEVEL" | currentTab == "VIEW") {
-        ui ->mainOptions ->clear();
-        ui ->heading ->setText("MAIN MENU");
-        QListWidgetItem *session = new QListWidgetItem("CREATE NEW SESSION");
-        QListWidgetItem *settings = new QListWidgetItem("SETTINGS");
-        QListWidgetItem *history = new QListWidgetItem("HISTORY");
-        QListWidgetItem *reset = new QListWidgetItem("RESET");
-        ui ->mainOptions ->addItem(session);
-        ui ->mainOptions ->addItem(settings);
-        ui ->mainOptions ->addItem(history);
-        ui ->mainOptions ->addItem(reset);
-        ui ->mainOptions ->setCurrentRow(0);
-    } else if (currentTab == "YES") {
-        ui ->mainOptions ->clear();
-        QListWidgetItem *session = new QListWidgetItem("CREATE NEW SESSION");
-        QListWidgetItem *settings = new QListWidgetItem("SETTINGS");
-        QListWidgetItem *history = new QListWidgetItem("HISTORY");
-        QListWidgetItem *reset = new QListWidgetItem("RESET");
-        ui ->mainOptions ->addItem(session);
-        ui ->mainOptions ->addItem(settings);
-        ui ->mainOptions ->addItem(history);
-        ui ->mainOptions ->addItem(reset);
-        ui ->mainOptions ->setCurrentRow(0);
-        ui ->views ->setCurrentIndex(0);
-        ui ->heading ->setText("MAIN MENU");
-    }
-}
-
 void MainWindow::countDown() {
-    ui ->label ->setText("3");
-    ui ->label ->setText("2");
-    ui ->label ->setText("1");
-    ui ->label ->setText("START!!!");
-    ui ->label ->setVisible(false);
+    ui ->countdown ->setText("3");
+    ui ->countdown ->setText("2");
+    ui ->countdown ->setText("1");
+    ui ->countdown ->setText("START!!!");
+    ui ->countdown ->setVisible(false);
 }
