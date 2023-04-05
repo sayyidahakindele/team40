@@ -3,7 +3,8 @@
 
 #include <QMainWindow>
 #include <QDebug>
-#include "defs.h"
+#include "database.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,11 +20,18 @@ public:
 
    void changePowerStatus(bool status);
    void updateMenu(QString option);
+   void countDown();
 
    // void startSession():
-    // random generator picks emotion
+    // random generator picks emotion:graph
+   // breath pace
     // start timer
-    // for loop
+   // every 5
+    // metric ->updateCoherence(
+   // metric ->updateAchievement
+   //when 100 secs is over or session is ended:
+   // return metric
+   // session(information:metric, date, length)
     //
 
 

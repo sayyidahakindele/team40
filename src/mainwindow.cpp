@@ -82,7 +82,7 @@ void MainWindow::on_downButton_clicked() {
 void MainWindow::on_okButton_clicked() {
     QString selectedItem = ui ->mainOptions ->currentItem() ->text();
     // updateMenu only called when a new submenu is created or a being difrected to a different menu
-    if (selectedItem == "CREATE NEW SESSION" | selectedItem == "SETTINGS" | selectedItem == "HISTORY" | selectedItem == "CHANGE CHALLENGE LEVEL" | selectedItem == "CHANGE BREATH PACE" | selectedItem == "HISTORY" | selectedItem == "RESET" | selectedItem == "YES" | selectedItem == "NO") {
+    if (selectedItem == "CREATE NEW SESSION" | selectedItem == "SETTINGS" | selectedItem == "HISTORY" | selectedItem == "CHANGE CHALLENGE LEVEL" | selectedItem == "CHANGE BREATH PACE" | selectedItem == "HISTORY" | selectedItem == "RESET" | selectedItem == "CLEAR"| selectedItem == "YES" | selectedItem == "NO") {
         updateMenu(selectedItem);
     } else { // this covers breath and challenge. Should call a function in each one that updates the respective quality
         // set selected option for metric
@@ -99,6 +99,7 @@ void MainWindow::on_okButton_clicked() {
 void MainWindow::updateMenu(QString option) {
     if (option == "CREATE NEW SESSION") {   // takes you to the session view tab
         ui ->views ->setCurrentIndex(1);
+        countDown();
         //startSession
     } else if (option == "SETTINGS") {      // creates sub menu by clearing current items and replacing it with submenu items. sets the current row to the first one and changes the heading
         ui ->mainOptions ->clear();
@@ -163,6 +164,12 @@ void MainWindow::updateMenu(QString option) {
     } else if (option == "RESET") {         // creates sub menu by clearing current items and replacing it with submenu items. sets the current row to the first one and changes the heading
         ui ->mainOptions ->clear();
         ui ->heading ->setText("ARE YOU SURE YOU WANT TO RESET?");
+        ui ->mainOptions ->addItem("YES");
+        ui ->mainOptions ->addItem("NO");
+        ui ->mainOptions ->setCurrentRow(0);
+    } else if (option == "CLEAR") {         // creates sub menu by clearing current items and replacing it with submenu items. sets the current row to the first one and changes the heading
+        ui ->mainOptions ->clear();
+        ui ->heading ->setText("ARE YOU SURE YOU WANT TO CLEAR ALL?");
         ui ->mainOptions ->addItem("YES");
         ui ->mainOptions ->addItem("NO");
         ui ->mainOptions ->setCurrentRow(0);
@@ -248,4 +255,12 @@ void MainWindow::on_backButton_clicked() {          // figures out what parent i
         ui ->views ->setCurrentIndex(0);
         ui ->heading ->setText("MAIN MENU");
     }
+}
+
+void MainWindow::countDown() {
+    ui ->label ->setText("3");
+    ui ->label ->setText("2");
+    ui ->label ->setText("1");
+    ui ->label ->setText("START!!!");
+    ui ->label ->setVisible(false);
 }

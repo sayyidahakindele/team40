@@ -35,7 +35,8 @@ SOURCES += \
         $${source_dir}/mainwindow.cpp \
         $${source_dir}/metric.cpp \
         $${source_dir}/settings.cpp \
-        $${source_dir}/loghistory.cpp
+        $${source_dir}/loghistory.cpp \
+        $${source_dir}/database.cpp \
 
 HEADERS += \
         $${source_dir}/session.h \
@@ -43,7 +44,7 @@ HEADERS += \
         $${source_dir}/metric.h \
         $${source_dir}/settings.h \
         $${source_dir}/loghistory.h \
-        src/defs.h
+        $${source_dir}/database.h \
 
 FORMS += \
         $${forms_dir}/mainwindow.ui
