@@ -6,7 +6,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
 
     // default settings
-    // hides tabs and disables buttons
     ui ->views ->setCurrentIndex(0);
     ui ->views ->setVisible(false);
     ui ->battery ->setVisible(false);
@@ -28,6 +27,9 @@ void MainWindow::on_powerButton_clicked() {
     //toggles between disabled menu and main menu
     if (power == true) {
         power = false;
+        if (ui ->views ->currentIndex() == 1) {
+            qDebug() << "session view";
+        }
         ui ->mainOptions ->clear();
     } else {
         power = true;
@@ -57,7 +59,7 @@ void MainWindow::on_upButton_clicked() {
 }
 
 // down button clicked
-void MainWindow::on_downButton_clicked() {
+void MainWindow::on_downButton_clicked() { 
     int current = ui ->mainOptions ->currentRow();
     if (current < ui ->mainOptions ->count() - 1) {
         ui ->mainOptions ->setCurrentRow(current + 1);
@@ -68,23 +70,29 @@ void MainWindow::on_downButton_clicked() {
 
 // ok button clicked
 void MainWindow::on_okButton_clicked() {
-    QString selectedItem = ui ->mainOptions ->currentItem() ->text();
-    // updateMenu only called when a new submenu is created or a being difrected to a different menu
-    if (selectedItem == "CREATE NEW SESSION" | selectedItem == "SETTINGS" | selectedItem == "HISTORY" | selectedItem == "CHANGE CHALLENGE LEVEL" | selectedItem == "CHANGE BREATH PACE" | selectedItem == "HISTORY" | selectedItem == "RESET" | selectedItem == "CLEAR"| selectedItem == "YES" | selectedItem == "NO") {
-        updateMenu(selectedItem);
-    } else { // this covers breath and challenge. Should call a function in each one that updates the respective quality
-        QString currentTab = ui ->mainOptions ->item(0) ->text();
-        if (currentTab == "1 - BEGINNER") {
-            setting.setLevel(ui ->mainOptions ->currentRow() + 1);
-        } else if (currentTab == "1") {
-            setting.setPace(ui ->mainOptions ->currentRow() + 1);
+    if (ui ->views ->currentIndex() == 0) {
+        QString selectedItem = ui ->mainOptions ->currentItem() ->text();
+        // updateMenu only called when a new submenu is created or a being difrected to a different menu
+        if (selectedItem == "CREATE NEW SESSION" | selectedItem == "SETTINGS" | selectedItem == "HISTORY" | selectedItem == "CHANGE CHALLENGE LEVEL" | selectedItem == "CHANGE BREATH PACE" | selectedItem == "HISTORY" | selectedItem == "RESET" | selectedItem == "CLEAR"| selectedItem == "YES" | selectedItem == "NO") {
+            updateMenu(selectedItem);
+        } else { // this covers breath and challenge. Should call a function in each one that updates the respective quality
+            QString currentTab = ui ->mainOptions ->item(0) ->text();
+            if (currentTab == "1 - BEGINNER") {
+                setting.setLevel(ui ->mainOptions ->currentRow() + 1);
+            } else if (currentTab == "1") {
+                setting.setPace(ui ->mainOptions ->currentRow() + 1);
+            }
         }
+    } else {
+        qDebug() << "session view";
     }
-
 }
 
 // menu button clicked
 void MainWindow::on_menuButton_clicked() {
+    if (ui ->views ->currentIndex() == 1) {
+        qDebug() << "session view";
+    }
     ui ->views ->setCurrentIndex(0);
     ui ->mainOptions ->clear();
     QListWidgetItem *session = new QListWidgetItem("CREATE NEW SESSION");
@@ -101,6 +109,9 @@ void MainWindow::on_menuButton_clicked() {
 
 // back button clicked
 void MainWindow::on_backButton_clicked() {
+    if (ui ->views ->currentIndex() == 1) {
+        qDebug() << "session view";
+    }
     QString currentTab = ui ->mainOptions ->item(0) ->text();
     if (currentTab == "1 - BEGINNER" | currentTab == "1") {
         ui ->mainOptions ->clear();

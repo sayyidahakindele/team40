@@ -51,7 +51,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     bool power;
-    bool view;
     settings setting;
 };
 #endif // MAINWINDOW_H
