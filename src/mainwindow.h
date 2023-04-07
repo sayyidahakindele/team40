@@ -7,6 +7,8 @@
 
 #include "testdata.h"
 #include "settings.h"
+#include "loghistory.h"
+#include "scores.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -55,6 +57,8 @@ private:
     Ui::MainWindow *ui;
     bool power;
     settings setting;
+    loghistory log;
+    scores s;
 //    testdata *data;
 };
 #endif // MAINWINDOW_H

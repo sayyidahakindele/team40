@@ -164,10 +164,15 @@ void MainWindow::changePowerStatus(bool status) {
 void MainWindow::updateMenu(QString option) {
     if (option == "CREATE NEW SESSION") {   // takes you to the session view tab
         ui ->views ->setCurrentIndex(1);
-        testdata *data = new testdata(qrand()%4);
+        testdata *data = new testdata(qrand()%4);//calls random test data
         QMap<int, int> graph = data ->getGraph();
-        QVector<double> scores = data ->getScores();
-        qDebug() << scores[0];
+        QVector<double> arrScores = data ->getScores();// call coherene
+        for(int i=0; i< sizeof(arrScores); ++i){
+            //qDebug() << arrScores[i];
+            qDebug() << arrScores[i]<< ":" << s.getAchievement(arrScores[i]);
+        }
+
+       // qDebug() << arrScores[0];
 
         //startSession
     } else if (option == "SETTINGS") {      // creates sub menu by clearing current items and replacing it with submenu items. sets the current row to the first one and changes the heading

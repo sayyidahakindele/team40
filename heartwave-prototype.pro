@@ -33,7 +33,7 @@ SOURCES += \
         $${source_dir}/session.cpp \
         $${source_dir}/main.cpp \
         $${source_dir}/mainwindow.cpp \
-        $${source_dir}/metric.cpp \
+        $${source_dir}/scores.cpp \
         $${source_dir}/settings.cpp \
         $${source_dir}/loghistory.cpp \
         $${source_dir}/testdata.cpp \
@@ -41,7 +41,7 @@ SOURCES += \
 HEADERS += \
         $${source_dir}/session.h \
         $${source_dir}/mainwindow.h \
-        $${source_dir}/metric.h \
+        $${source_dir}/scores.h \
         $${source_dir}/settings.h \
         $${source_dir}/loghistory.h \
         $${source_dir}/testdata.h \
