@@ -164,7 +164,11 @@ void MainWindow::changePowerStatus(bool status) {
 void MainWindow::updateMenu(QString option) {
     if (option == "CREATE NEW SESSION") {   // takes you to the session view tab
         ui ->views ->setCurrentIndex(1);
-        countDown();
+        testdata *data = new testdata(qrand()%4);
+        QMap<int, int> graph = data ->getGraph();
+        QVector<double> scores = data ->getScores();
+        qDebug() << scores[0];
+
         //startSession
     } else if (option == "SETTINGS") {      // creates sub menu by clearing current items and replacing it with submenu items. sets the current row to the first one and changes the heading
         ui ->mainOptions ->clear();
@@ -268,6 +272,8 @@ void MainWindow::updateMenu(QString option) {
 }
 
 void MainWindow::countDown() {
+    QTimer *timer = new QTimer(this);
+    timer->setInterval(1000);
     ui ->countdown ->setText("3");
     ui ->countdown ->setText("2");
     ui ->countdown ->setText("1");

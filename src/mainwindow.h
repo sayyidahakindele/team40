@@ -3,8 +3,9 @@
 
 #include <QMainWindow>
 #include <QDebug>
+#include <QTimer>
 
-#include "database.h"
+#include "testdata.h"
 #include "settings.h"
 
 QT_BEGIN_NAMESPACE
@@ -22,6 +23,8 @@ public:
    void changePowerStatus(bool status);
    void updateMenu(QString option);
    void countDown();
+   void session(int pace, int level, QMap<int, int>, QVector<double>);
+   void simulateBreathPace(int pace);
 
    // void startSession():
     // random generator picks emotion:graph
@@ -52,5 +55,6 @@ private:
     Ui::MainWindow *ui;
     bool power;
     settings setting;
+//    testdata *data;
 };
 #endif // MAINWINDOW_H
