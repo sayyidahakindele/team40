@@ -189,14 +189,12 @@ void MainWindow::updateMenu(QString option) {
         QTimer::singleShot(100000,&l,&QEventLoop::quit);
         l.exec();
         qDebug() << "Session finished";
-<<<<<<< HEAD
 
     } else if (option == "SETTINGS") {      // creates sub menu by clearing current items and replacing it with submenu items. sets the current row to the first one and changes the heading
-=======
+
         endSession();
         //startSession
     } else if (option == "SETTINGS") {
->>>>>>> 690cbd7d22e76a6186f883a71a8f986d2a4bdceb
         ui ->mainOptions ->clear();
         ui ->heading ->setText("SETTINGS");
         QListWidgetItem *challengeLevel = new QListWidgetItem("CHANGE CHALLENGE LEVEL");
@@ -312,7 +310,6 @@ void MainWindow::countDown() {
     ui ->countdown ->setVisible(false);
 }
 
-<<<<<<< HEAD
 //starts the timer and updates its display in session
 void MainWindow::startTimer(QTimer& timer, QTimer& countdown, QLCDNumber& tracker, int& countTime)
 {
@@ -351,7 +348,7 @@ void MainWindow::updateDisplay(QTimer& timer, QLCDNumber& coh, QLCDNumber& ach, 
         qDebug() << "Achievement Sum:" << achieveSum;
         qDebug() << "Timer Up!";
     }
-=======
+ }
 void MainWindow::endSession() {
     // call session ->session();
     qDebug() << "session saved!";
@@ -360,5 +357,4 @@ void MainWindow::endSession() {
     ui ->heading ->setText("SESSIONS");
     // if (log is empty)
     ui ->mainOptions ->addItem("EMPTY");
->>>>>>> 690cbd7d22e76a6186f883a71a8f986d2a4bdceb
 }
