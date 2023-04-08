@@ -2,7 +2,6 @@
 #define SESSION_H
 
 #include <QDate>
-#include "metric.h"
 
 class session {
 

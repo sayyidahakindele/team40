@@ -1,7 +1,11 @@
 #include "scores.h"
 
-
-double scores::getAchievement(double coherence){
-    achieveScore +=  coherence;
-    return achieveScore;
+double scores::setAchievement(){
+    achieveScore=0;
 }
+
+double scores::getAchievement(double coherence, double& sum){
+    sum +=  coherence;
+    return sum;
+}
+
