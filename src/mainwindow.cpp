@@ -73,7 +73,7 @@ void MainWindow::on_okButton_clicked() {
     if (ui ->views ->currentIndex() == 0) {
         QString selectedItem = ui ->mainOptions ->currentItem() ->text();
         // updateMenu only called when a new submenu is created or a being difrected to a different menu
-        if (selectedItem == "CREATE NEW SESSION" | selectedItem == "SETTINGS" | selectedItem == "HISTORY" | selectedItem == "CHANGE CHALLENGE LEVEL" | selectedItem == "CHANGE BREATH PACE" | selectedItem == "HISTORY" | selectedItem == "RESET" | selectedItem == "CLEAR"| selectedItem == "YES" | selectedItem == "NO") {
+        if (selectedItem == "CREATE NEW SESSION" | selectedItem == "SETTINGS" | selectedItem == "HISTORY" | selectedItem == "CHANGE CHALLENGE LEVEL" | selectedItem == "CHANGE BREATH PACE" | selectedItem == "HISTORY" | selectedItem == "RESET" | selectedItem == "CLEAR"| selectedItem == "YES" | selectedItem == "NO" | selectedItem == "VIEW") {
             updateMenu(selectedItem);
         } else { // this covers breath and challenge. Should call a function in each one that updates the respective quality
             QString currentTab = ui ->mainOptions ->item(0) ->text();
@@ -111,6 +111,7 @@ void MainWindow::on_menuButton_clicked() {
 void MainWindow::on_backButton_clicked() {
     if (ui ->views ->currentIndex() == 1) {
         qDebug() << "session view";
+        ui ->views ->setCurrentIndex(0);
     }
     QString currentTab = ui ->mainOptions ->item(0) ->text();
     if (currentTab == "1 - BEGINNER" | currentTab == "1") {
@@ -121,7 +122,7 @@ void MainWindow::on_backButton_clicked() {
         ui ->mainOptions ->addItem(challengeLevel);
         ui ->mainOptions ->addItem(breathPace);
         ui ->mainOptions ->setCurrentRow(0);
-    } else if (currentTab == "CHANGE CHALLENGE LEVEL" | currentTab == "VIEW") {
+    } else if (currentTab == "CHANGE CHALLENGE LEVEL" | currentTab == "VIEW" | currentTab == "YES" | currentTab == "NO") {
         ui ->mainOptions ->clear();
         ui ->heading ->setText("MAIN MENU");
         QListWidgetItem *session = new QListWidgetItem("CREATE NEW SESSION");
@@ -133,19 +134,13 @@ void MainWindow::on_backButton_clicked() {
         ui ->mainOptions ->addItem(history);
         ui ->mainOptions ->addItem(reset);
         ui ->mainOptions ->setCurrentRow(0);
-    } else if (currentTab == "YES") {
+    } else {
         ui ->mainOptions ->clear();
-        QListWidgetItem *session = new QListWidgetItem("CREATE NEW SESSION");
-        QListWidgetItem *settings = new QListWidgetItem("SETTINGS");
-        QListWidgetItem *history = new QListWidgetItem("HISTORY");
-        QListWidgetItem *reset = new QListWidgetItem("RESET");
-        ui ->mainOptions ->addItem(session);
-        ui ->mainOptions ->addItem(settings);
-        ui ->mainOptions ->addItem(history);
-        ui ->mainOptions ->addItem(reset);
+        QListWidgetItem *view = new QListWidgetItem("VIEW");
+        QListWidgetItem *clear = new QListWidgetItem("CLEAR");
+        ui ->mainOptions ->addItem(view);
+        ui ->mainOptions ->addItem(clear);
         ui ->mainOptions ->setCurrentRow(0);
-        ui ->views ->setCurrentIndex(0);
-        ui ->heading ->setText("MAIN MENU");
     }
 }
 
@@ -273,6 +268,12 @@ void MainWindow::updateMenu(QString option) {
         ui ->mainOptions ->setCurrentRow(0);
         ui ->views ->setCurrentIndex(0);
         ui ->heading ->setText("MAIN MENU");
+    } else if (option == "VIEW") {
+        ui ->mainOptions ->clear();
+        ui ->heading ->setText("ALL SESSIONS");
+        // if (log is empty)
+        ui ->mainOptions ->addItem("EMPTY");
+
     }
 }
 
