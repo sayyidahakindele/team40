@@ -30,6 +30,7 @@ public:
    void printHistory(int id);
    void session(int pace, int level, QMap<int, int>, QVector<double>);
    void beep();
+   void endSession();
 
    // session graphics
    void updateScores(int coherence, int achievement);

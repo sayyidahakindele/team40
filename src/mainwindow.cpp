@@ -217,9 +217,9 @@ void MainWindow::updateMenu(QString option) {
         QTimer::singleShot(100000,&l,&QEventLoop::quit);
         l.exec();
         qDebug() << "Session finished";
-
+        endSession();
         //startSession
-    } else if (option == "SETTINGS") {      // creates sub menu by clearing current items and replacing it with submenu items. sets the current row to the first one and changes the heading
+    } else if (option == "SETTINGS") {
         ui ->mainOptions ->clear();
         ui ->heading ->setText("SETTINGS");
         QListWidgetItem *challengeLevel = new QListWidgetItem("CHANGE CHALLENGE LEVEL");
@@ -227,13 +227,13 @@ void MainWindow::updateMenu(QString option) {
         ui ->mainOptions ->addItem(challengeLevel);
         ui ->mainOptions ->addItem(breathPace);
         ui ->mainOptions ->setCurrentRow(0);
-    } else if (option == "HISTORY") {       // creates sub menu by clearing current items and replacing it with submenu items. sets the current row to the first one and changes the heading
+    } else if (option == "HISTORY") {
         ui ->mainOptions ->clear();
         ui ->heading ->setText("HISTORY");
         ui ->mainOptions ->addItem("VIEW");
         ui ->mainOptions ->addItem("CLEAR");
         ui ->mainOptions ->setCurrentRow(0);
-    } else if (option == "CHANGE CHALLENGE LEVEL") {    // creates sub menu by clearing current items and replacing it with submenu items. sets the current row to the first one and changes the heading
+    } else if (option == "CHANGE CHALLENGE LEVEL") {
         ui ->mainOptions ->clear();
         ui ->heading ->setText("SETTINGS");
         QListWidgetItem *beginner = new QListWidgetItem("1 - BEGINNER");
@@ -245,7 +245,7 @@ void MainWindow::updateMenu(QString option) {
         ui ->mainOptions ->addItem(hard);
         ui ->mainOptions ->addItem(advanced);
         ui ->mainOptions ->setCurrentRow(setting.getLevel() - 1);
-    } else if (option == "CHANGE BREATH PACE") {        // creates sub menu by clearing current items and replacing it with submenu items. sets the current row to the first one and changes the heading
+    } else if (option == "CHANGE BREATH PACE") {
         ui ->mainOptions ->clear();
         ui ->heading ->setText("SETTINGS");
         ui ->mainOptions ->addItem("1");
@@ -279,19 +279,19 @@ void MainWindow::updateMenu(QString option) {
         ui ->mainOptions ->addItem("29");
         ui ->mainOptions ->addItem("30");
         ui ->mainOptions ->setCurrentRow(setting.getPace() - 1);
-    } else if (option == "RESET") {         // creates sub menu by clearing current items and replacing it with submenu items. sets the current row to the first one and changes the heading
+    } else if (option == "RESET") {
         ui ->mainOptions ->clear();
         ui ->heading ->setText("ARE YOU SURE YOU WANT TO RESET?");
         ui ->mainOptions ->addItem("YES");
         ui ->mainOptions ->addItem("NO");
         ui ->mainOptions ->setCurrentRow(0);
-    } else if (option == "CLEAR") {         // creates sub menu by clearing current items and replacing it with submenu items. sets the current row to the first one and changes the heading
+    } else if (option == "CLEAR") {
         ui ->mainOptions ->clear();
         ui ->heading ->setText("ARE YOU SURE YOU WANT TO CLEAR ALL?");
         ui ->mainOptions ->addItem("YES");
         ui ->mainOptions ->addItem("NO");
         ui ->mainOptions ->setCurrentRow(0);
-    } else if (option == "YES") {       // resets challenge and breath // returns back to main menu. sets the current row to the first one and changes the heading
+    } else if (option == "YES") {
         ui ->mainOptions ->clear();
         QListWidgetItem *session = new QListWidgetItem("CREATE NEW SESSION");
         QListWidgetItem *settings = new QListWidgetItem("SETTINGS");
@@ -304,7 +304,7 @@ void MainWindow::updateMenu(QString option) {
         ui ->mainOptions ->setCurrentRow(0);
         ui ->views ->setCurrentIndex(0);
         ui ->heading ->setText("MAIN MENU");
-    } else if (option == "NO") {    // returns back to main menu. sets the current row to the first one and changes the heading
+    } else if (option == "NO") {
         ui ->mainOptions ->clear();
         QListWidgetItem *session = new QListWidgetItem("CREATE NEW SESSION");
         QListWidgetItem *settings = new QListWidgetItem("SETTINGS");
@@ -322,7 +322,6 @@ void MainWindow::updateMenu(QString option) {
         ui ->heading ->setText("ALL SESSIONS");
         // if (log is empty)
         ui ->mainOptions ->addItem("EMPTY");
-
     }
 }
 
@@ -334,4 +333,13 @@ void MainWindow::countDown() {
     ui ->countdown ->setText("1");
     ui ->countdown ->setText("START!!!");
     ui ->countdown ->setVisible(false);
+}
+
+void MainWindow::endSession() {
+    // call session ->session();
+    ui ->views ->setCurrentIndex(0);
+    ui ->mainOptions ->clear();
+    ui ->heading ->setText("SESSIONS");
+    // if (log is empty)
+    ui ->mainOptions ->addItem("EMPTY");
 }
