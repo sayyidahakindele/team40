@@ -158,16 +158,65 @@ void MainWindow::changePowerStatus(bool status) {
 
 void MainWindow::updateMenu(QString option) {
     if (option == "CREATE NEW SESSION") {   // takes you to the session view tab
+
+        int i= 0;
+        double achieveSum=0;
+        int countTime= 100; //100 seconds
+
+        //Timer
+        QTimer timer;
+        timer.setInterval(5000); //in miliseconds every 5secs
+        timer.setSingleShot(false); //repeat
+
+        //set timer display
+        QTimer countdown;
+        countdown.setInterval(1000); //in miliseconds every second
+
+        QLCDNumber *coh= ui->coherence; //assign coherence pointer
+        QLCDNumber *ach = ui->achievement; //assign achievemnt pointer
+        QLCDNumber *tracker= ui->timer; //assign timer pointer
+
+        QObject::connect(&countdown, &QTimer::timeout, [&](){
+            if(countTime > 0){
+                countTime--;
+                tracker->display(countTime);
+            }
+            else{
+                countdown.stop();
+                qDebug() << "Timer Up!";
+            }
+        });
+        countdown.start(); //starts timer
+
+        s.setAchievement(); //sets the achievementscore to 0 on each new session run s
         ui ->views ->setCurrentIndex(1);
         testdata *data = new testdata(qrand()%4);//calls random test data
         QMap<int, int> graph = data ->getGraph();
-        QVector<double> arrScores = data ->getScores();// call coherene
-        for(int i=0; i< sizeof(arrScores); ++i){
-            //qDebug() << arrScores[i];
-            qDebug() << arrScores[i]<< ":" << s.getAchievement(arrScores[i]);
-        }
+        QVector<double> arrScores = data ->getScores();// call coherence
 
-       // qDebug() << arrScores[0];
+        //connects timer signal to the the iteration loop to get coherence
+        QObject::connect(&timer, &QTimer::timeout, [&](){
+            if(i< arrScores.size()){
+                double score= arrScores[i];
+                achieveSum= s.getAchievement(score, achieveSum);
+                //qDebug() << i+1 << "Coherence:" << score;
+                coh->display(score);//displays coherence score
+                //qDebug() << "Achievement Sum:" << achieveSum;
+                ach->display(achieveSum);//displays achievement score
+                i++;
+            }
+            else{
+                timer.stop();
+                qDebug() << "Achievement Sum:" << achieveSum;
+                qDebug() << "Timer Up!";
+            }
+        });
+        timer.start(); //starts timer
+
+        QEventLoop l;
+        QTimer::singleShot(100000,&l,&QEventLoop::quit);
+        l.exec();
+        qDebug() << "Session finished";
 
         //startSession
     } else if (option == "SETTINGS") {      // creates sub menu by clearing current items and replacing it with submenu items. sets the current row to the first one and changes the heading

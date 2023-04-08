@@ -5,7 +5,7 @@
 #include <QDebug>
 #include <QTimer>
 #include <QVector>
-
+#include <QLCDNumber>
 #include "testdata.h"
 #include "settings.h"
 #include "loghistory.h"
