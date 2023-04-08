@@ -25,6 +25,9 @@ MainWindow::~MainWindow() {
 // power button toggle
 void MainWindow::on_powerButton_clicked() {
     //toggles between disabled menu and main menu
+    if (ui ->views ->currentIndex() == 1) {
+        endSession();
+    }
     if (power == true) {
         power = false;
         if (ui ->views ->currentIndex() == 1) {
@@ -84,14 +87,14 @@ void MainWindow::on_okButton_clicked() {
             }
         }
     } else {
-        qDebug() << "session view";
+        endSession();
     }
 }
 
 // menu button clicked
 void MainWindow::on_menuButton_clicked() {
     if (ui ->views ->currentIndex() == 1) {
-        qDebug() << "session view";
+       endSession();
     }
     ui ->views ->setCurrentIndex(0);
     ui ->mainOptions ->clear();
@@ -110,8 +113,7 @@ void MainWindow::on_menuButton_clicked() {
 // back button clicked
 void MainWindow::on_backButton_clicked() {
     if (ui ->views ->currentIndex() == 1) {
-        qDebug() << "session view";
-        ui ->views ->setCurrentIndex(0);
+        endSession();
     }
     QString currentTab = ui ->mainOptions ->item(0) ->text();
     if (currentTab == "1 - BEGINNER" | currentTab == "1") {
@@ -337,6 +339,7 @@ void MainWindow::countDown() {
 
 void MainWindow::endSession() {
     // call session ->session();
+    qDebug() << "session saved!";
     ui ->views ->setCurrentIndex(0);
     ui ->mainOptions ->clear();
     ui ->heading ->setText("SESSIONS");
