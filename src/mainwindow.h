@@ -4,8 +4,8 @@
 #include <QMainWindow>
 #include <QDebug>
 #include <QTimer>
+#include <QVector>
 #include <QLCDNumber>
-
 #include "testdata.h"
 #include "settings.h"
 #include "loghistory.h"
@@ -26,8 +26,18 @@ public:
    void changePowerStatus(bool status);
    void updateMenu(QString option);
    void countDown();
+   void printHistories();
+   void printHistory(int id);
    void session(int pace, int level, QMap<int, int>, QVector<double>);
+   void beep();
+
+   // session graphics
+   void updateScores(int coherence, int achievement);
+   void simulateGraph();
+   void updateTimer();
+   void updateLights(int color);
    void simulateBreathPace(int pace);
+   void battery();
 
    // void startSession():
     // random generator picks emotion:graph

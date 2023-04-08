@@ -1055,6 +1055,9 @@ font: 75 18pt &quot;Noto Sans Glagolitic&quot;;</string>
           <property name="autoFillBackground">
            <bool>true</bool>
           </property>
+          <property name="frameShape">
+           <enum>QFrame::Box</enum>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -1231,6 +1234,25 @@ font: 75 18pt &quot;Noto Sans Glagolitic&quot;;</string>
             <italic>false</italic>
             <bold>false</bold>
            </font>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+         <widget class="QLabel" name="running">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>10</y>
+            <width>20</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(237, 212, 0)</string>
           </property>
           <property name="text">
            <string/>
