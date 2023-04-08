@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QDebug>
 #include <QTimer>
+#include <QLCDNumber>
 
 #include "testdata.h"
 #include "settings.h"

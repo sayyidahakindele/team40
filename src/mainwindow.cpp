@@ -164,12 +164,34 @@ void MainWindow::changePowerStatus(bool status) {
 void MainWindow::updateMenu(QString option) {
     if (option == "CREATE NEW SESSION") {   // takes you to the session view tab
 
+        int i= 0;
+        double achieveSum=0;
+        int countTime= 100; //100 seconds
+
         //Timer
         QTimer timer;
         timer.setInterval(5000); //in miliseconds every 5secs
         timer.setSingleShot(false); //repeat
-        int curr= 0;
-        double achieveSum=0;
+
+        //set timer display
+        QTimer countdown;
+        countdown.setInterval(1000); //in miliseconds every second
+
+        QLCDNumber *coh= ui->coherence; //assign coherence pointer
+        QLCDNumber *ach = ui->achievement; //assign achievemnt pointer
+        QLCDNumber *tracker= ui->timer; //assign timer pointer
+
+        QObject::connect(&countdown, &QTimer::timeout, [&](){
+            if(countTime > 0){
+                countTime--;
+                tracker->display(countTime);
+            }
+            else{
+                countdown.stop();
+                qDebug() << "Timer Up!";
+            }
+        });
+        countdown.start(); //starts timer
 
         s.setAchievement(); //sets the achievementscore to 0 on each new session run s
         ui ->views ->setCurrentIndex(1);
@@ -179,16 +201,19 @@ void MainWindow::updateMenu(QString option) {
 
         //connects timer signal to the the iteration loop to get coherence
         QObject::connect(&timer, &QTimer::timeout, [&](){
-            if(curr< arrScores.size()){
-                double score= arrScores[curr];
+            if(i< arrScores.size()){
+                double score= arrScores[i];
                 achieveSum= s.getAchievement(score, achieveSum);
-                qDebug() << "Coherence:" << score;
-                qDebug() << "Achievement Sum:" << achieveSum;
-                curr++;
+                //qDebug() << i+1 << "Coherence:" << score;
+                coh->display(score);//displays coherence score
+                //qDebug() << "Achievement Sum:" << achieveSum;
+                ach->display(achieveSum);//displays achievement score
+                i++;
             }
             else{
                 timer.stop();
                 qDebug() << "Achievement Sum:" << achieveSum;
+                qDebug() << "Timer Up!";
             }
         });
         timer.start(); //starts timer
