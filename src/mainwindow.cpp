@@ -305,6 +305,7 @@ void MainWindow::countDown() {
     ui ->countdown ->setVisible(false);
 }
 
+//starts the timer and updates its display in session
 void MainWindow::startTimer(QTimer& timer, QTimer& countdown, QLCDNumber& tracker, int& countTime)
 {
     timer.setInterval(5000);
@@ -327,6 +328,7 @@ void MainWindow::startTimer(QTimer& timer, QTimer& countdown, QLCDNumber& tracke
     timer.start();
 }
 
+//gets coherence and achievement score and updates the values in the session display
 void MainWindow::updateDisplay(QTimer& timer, QLCDNumber& coh, QLCDNumber& ach, QVector<double>& arrScores, int& i, double& achieveSum)
 {
     if(i< arrScores.size()){
