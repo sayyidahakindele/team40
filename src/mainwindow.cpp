@@ -158,67 +158,36 @@ void MainWindow::changePowerStatus(bool status) {
 
 void MainWindow::updateMenu(QString option) {
     if (option == "CREATE NEW SESSION") {   // takes you to the session view tab
-
         int i= 0;
         double achieveSum=0;
-        int countTime= 100; //100 seconds
 
         //Timer
         QTimer timer;
-        timer.setInterval(5000); //in miliseconds every 5secs
-        timer.setSingleShot(false); //repeat
+        QTimer countdown;
+        int countTime= 100;
 
         //set timer display
-        QTimer countdown;
-        countdown.setInterval(1000); //in miliseconds every second
+        QLCDNumber *coh= ui->coherence;
+        QLCDNumber *ach = ui->achievement;
+        QLCDNumber *tracker= ui->timer;
 
-        QLCDNumber *coh= ui->coherence; //assign coherence pointer
-        QLCDNumber *ach = ui->achievement; //assign achievemnt pointer
-        QLCDNumber *tracker= ui->timer; //assign timer pointer
-
-        QObject::connect(&countdown, &QTimer::timeout, [&](){
-            if(countTime > 0){
-                countTime--;
-                tracker->display(countTime);
-            }
-            else{
-                countdown.stop();
-                qDebug() << "Timer Up!";
-            }
-        });
-        countdown.start(); //starts timer
-
-        s.setAchievement(); //sets the achievementscore to 0 on each new session run s
+        s.setAchievement();
         ui ->views ->setCurrentIndex(1);
-        testdata *data = new testdata(qrand()%4);//calls random test data
+        testdata *data = new testdata(qrand()%4);
         QMap<int, int> graph = data ->getGraph();
-        QVector<double> arrScores = data ->getScores();// call coherence
+        QVector<double> arrScores = data ->getScores();
 
-        //connects timer signal to the the iteration loop to get coherence
+        startTimer(timer, countdown, *tracker, countTime);
+
         QObject::connect(&timer, &QTimer::timeout, [&](){
-            if(i< arrScores.size()){
-                double score= arrScores[i];
-                achieveSum= s.getAchievement(score, achieveSum);
-                //qDebug() << i+1 << "Coherence:" << score;
-                coh->display(score);//displays coherence score
-                //qDebug() << "Achievement Sum:" << achieveSum;
-                ach->display(achieveSum);//displays achievement score
-                i++;
-            }
-            else{
-                timer.stop();
-                qDebug() << "Achievement Sum:" << achieveSum;
-                qDebug() << "Timer Up!";
-            }
+            updateDisplay(timer, *coh, *ach, arrScores, i, achieveSum);
         });
-        timer.start(); //starts timer
 
         QEventLoop l;
         QTimer::singleShot(100000,&l,&QEventLoop::quit);
         l.exec();
         qDebug() << "Session finished";
 
-        //startSession
     } else if (option == "SETTINGS") {      // creates sub menu by clearing current items and replacing it with submenu items. sets the current row to the first one and changes the heading
         ui ->mainOptions ->clear();
         ui ->heading ->setText("SETTINGS");
@@ -334,4 +303,42 @@ void MainWindow::countDown() {
     ui ->countdown ->setText("1");
     ui ->countdown ->setText("START!!!");
     ui ->countdown ->setVisible(false);
+}
+
+void MainWindow::startTimer(QTimer& timer, QTimer& countdown, QLCDNumber& tracker, int& countTime)
+{
+    timer.setInterval(5000);
+    timer.setSingleShot(false);
+
+    countdown.setInterval(1000);
+
+    QObject::connect(&countdown, &QTimer::timeout, [&](){
+        if(countTime > 0){
+            countTime--;
+            tracker.display(countTime);
+        }
+        else{
+            countdown.stop();
+            qDebug() << "Timer Up!";
+        }
+    });
+
+    countdown.start();
+    timer.start();
+}
+
+void MainWindow::updateDisplay(QTimer& timer, QLCDNumber& coh, QLCDNumber& ach, QVector<double>& arrScores, int& i, double& achieveSum)
+{
+    if(i< arrScores.size()){
+        double score= arrScores[i];
+        achieveSum= s.getAchievement(score, achieveSum);
+        coh.display(score);
+        ach.display(achieveSum);
+        i++;
+    }
+    else{
+        timer.stop();
+        qDebug() << "Achievement Sum:" << achieveSum;
+        qDebug() << "Timer Up!";
+    }
 }

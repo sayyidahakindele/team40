@@ -32,6 +32,8 @@ public:
    void beep();
 
    // session graphics
+   void startTimer(QTimer& timer, QTimer& countdown, QLCDNumber& tracker, int& countTime);
+   void updateDisplay(QTimer& timer, QLCDNumber& coh, QLCDNumber& ach, QVector<double>& arrScores, int& i, double& achieveSum);
    void updateScores(int coherence, int achievement);
    void simulateGraph();
    void updateTimer();
