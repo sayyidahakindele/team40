@@ -30,6 +30,7 @@ public:
    void printHistory(int id);
    void session(int pace, int level, QMap<int, int>, QVector<double>);
    void beep();
+   void endSession();
 
    // session graphics
    void startTimer(QTimer& timer, QTimer& countdown, QLCDNumber& tracker, int& countTime);
