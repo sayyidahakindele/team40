@@ -166,6 +166,7 @@ void MainWindow::updateMenu(QString option) {
         //Timer
         QTimer timer;
         QTimer countdown;
+        QTimer pace;
         int countTime= 100;
 
         //set timer display
@@ -175,11 +176,11 @@ void MainWindow::updateMenu(QString option) {
 
         s.setAchievement();
         ui ->views ->setCurrentIndex(1);
-        testdata *data = new testdata(qrand()%4);
+        testdata *data = new testdata(qrand()%3);
         QMap<int, int> graph = data ->getGraph();
         QVector<double> arrScores = data ->getScores();
 
-        startTimer(timer, countdown, *tracker, countTime);
+        startTimer(timer, countdown, pace, *tracker, countTime);
 
         QObject::connect(&timer, &QTimer::timeout, [&](){
             updateDisplay(timer, *coh, *ach, arrScores, i, achieveSum);
@@ -188,10 +189,6 @@ void MainWindow::updateMenu(QString option) {
         QEventLoop l;
         QTimer::singleShot(100000,&l,&QEventLoop::quit);
         l.exec();
-        qDebug() << "Session finished";
-
-    } else if (option == "SETTINGS") {      // creates sub menu by clearing current items and replacing it with submenu items. sets the current row to the first one and changes the heading
-
         endSession();
         //startSession
     } else if (option == "SETTINGS") {
@@ -229,29 +226,10 @@ void MainWindow::updateMenu(QString option) {
         ui ->mainOptions ->addItem("4");
         ui ->mainOptions ->addItem("5");
         ui ->mainOptions ->addItem("6");
-        ui ->mainOptions ->addItem("7");
-        ui ->mainOptions ->addItem("8");
-        ui ->mainOptions ->addItem("9");
         ui ->mainOptions ->addItem("10");
-        ui ->mainOptions ->addItem("11");
         ui ->mainOptions ->addItem("12");
-        ui ->mainOptions ->addItem("13");
-        ui ->mainOptions ->addItem("14");
         ui ->mainOptions ->addItem("15");
-        ui ->mainOptions ->addItem("16");
-        ui ->mainOptions ->addItem("17");
-        ui ->mainOptions ->addItem("18");
-        ui ->mainOptions ->addItem("19");
         ui ->mainOptions ->addItem("20");
-        ui ->mainOptions ->addItem("21");
-        ui ->mainOptions ->addItem("22");
-        ui ->mainOptions ->addItem("23");
-        ui ->mainOptions ->addItem("24");
-        ui ->mainOptions ->addItem("25");
-        ui ->mainOptions ->addItem("26");
-        ui ->mainOptions ->addItem("27");
-        ui ->mainOptions ->addItem("28");
-        ui ->mainOptions ->addItem("29");
         ui ->mainOptions ->addItem("30");
         ui ->mainOptions ->setCurrentRow(setting.getPace() - 1);
     } else if (option == "RESET") {
@@ -311,12 +289,14 @@ void MainWindow::countDown() {
 }
 
 //starts the timer and updates its display in session
-void MainWindow::startTimer(QTimer& timer, QTimer& countdown, QLCDNumber& tracker, int& countTime)
+void MainWindow::startTimer(QTimer& timer, QTimer& countdown, QTimer& bpace, QLCDNumber& tracker, int& countTime) // add timers for graph, breath pace
 {
     timer.setInterval(5000);
     timer.setSingleShot(false);
 
     countdown.setInterval(1000);
+
+    bpace.setInterval(setting.getPace());
 
     QObject::connect(&countdown, &QTimer::timeout, [&](){
         if(countTime > 0){

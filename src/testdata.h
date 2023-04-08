@@ -9,10 +9,9 @@ class testdata
 {
     public:
         testdata(int number);
-        void frustration();
-        void anxiety();
-        void happiness();
-        void love();
+        void low();
+        void medium();
+        void high();
         void lowCoherence();
         void mediumCoherence();
         void highCoherence();

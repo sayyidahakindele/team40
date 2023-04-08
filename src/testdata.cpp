@@ -3,25 +3,21 @@
 testdata::testdata(int number) {
     switch(number) {
         case 0:
-            frustration();
+            low();
             lowCoherence();
             break;
         case 1:
-            anxiety();
+            medium();
             mediumCoherence();
             break;
         case 2:
-            love();
+            high();
             highCoherence();
-            break;
-        case 3:
-            happiness();
-            mediumCoherence();
             break;
     }
 }
 
-void testdata::frustration() {
+void testdata::low() {
     graph.insert(0, 78);
     graph.insert(1, 85);
     graph.insert(2, 82);
@@ -124,7 +120,7 @@ void testdata::frustration() {
     graph.insert(99, 90);
 }
 
-void testdata::anxiety() {
+void testdata::medium() {
     graph.insert(0, 85);
     graph.insert(1, 93);
     graph.insert(2, 92);
@@ -227,7 +223,7 @@ void testdata::anxiety() {
     graph.insert(99, 101);
 }
 
-void testdata::happiness() {
+void testdata::high() {
     graph.insert(0, 75);
     graph.insert(1, 80);
     graph.insert(2, 85);
@@ -328,109 +324,6 @@ void testdata::happiness() {
     graph.insert(97, 110);
     graph.insert(98, 105);
     graph.insert(99, 104);
-}
-
-void testdata::love() {
-    graph.insert(0, 70);
-    graph.insert(1, 75);
-    graph.insert(2, 80);
-    graph.insert(3, 85);
-    graph.insert(4, 90);
-    graph.insert(5, 95);
-    graph.insert(6, 100);
-    graph.insert(7, 105);
-    graph.insert(8, 110);
-    graph.insert(9, 115);
-    graph.insert(10, 120);
-    graph.insert(11, 125);
-    graph.insert(12, 130);
-    graph.insert(13, 135);
-    graph.insert(14, 140);
-    graph.insert(15, 145);
-    graph.insert(16, 150);
-    graph.insert(17, 155);
-    graph.insert(18, 160);
-    graph.insert(19, 165);
-    graph.insert(20, 170);
-    graph.insert(21, 175);
-    graph.insert(22, 180);
-    graph.insert(23, 185);
-    graph.insert(24, 190);
-    graph.insert(25, 195);
-    graph.insert(26, 200);
-    graph.insert(27, 205);
-    graph.insert(28, 210);
-    graph.insert(29, 215);
-    graph.insert(30, 220);
-    graph.insert(31, 225);
-    graph.insert(32, 230);
-    graph.insert(33, 235);
-    graph.insert(34, 240);
-    graph.insert(35, 245);
-    graph.insert(36, 250);
-    graph.insert(37, 255);
-    graph.insert(38, 260);
-    graph.insert(39, 265);
-    graph.insert(40, 270);
-    graph.insert(41, 275);
-    graph.insert(42, 280);
-    graph.insert(43, 285);
-    graph.insert(44, 290);
-    graph.insert(45, 295);
-    graph.insert(46, 300);
-    graph.insert(47, 295);
-    graph.insert(48, 290);
-    graph.insert(49, 285);
-    graph.insert(50, 280);
-    graph.insert(51, 275);
-    graph.insert(52, 270);
-    graph.insert(53, 265);
-    graph.insert(54, 260);
-    graph.insert(55, 255);
-    graph.insert(56, 250);
-    graph.insert(57, 245);
-    graph.insert(58, 240);
-    graph.insert(59, 235);
-    graph.insert(60, 230);
-    graph.insert(61, 225);
-    graph.insert(62, 220);
-    graph.insert(63, 215);
-    graph.insert(64, 210);
-    graph.insert(65, 205);
-    graph.insert(66, 200);
-    graph.insert(67, 195);
-    graph.insert(68, 190);
-    graph.insert(69, 185);
-    graph.insert(70, 180);
-    graph.insert(71, 175);
-    graph.insert(72, 170);
-    graph.insert(73, 165);
-    graph.insert(74, 160);
-    graph.insert(75, 155);
-    graph.insert(76, 150);
-    graph.insert(77, 145);
-    graph.insert(78, 140);
-    graph.insert(79, 135);
-    graph.insert(80, 130);
-    graph.insert(81, 125);
-    graph.insert(82, 120);
-    graph.insert(83, 115);
-    graph.insert(84, 110);
-    graph.insert(85, 105);
-    graph.insert(86, 100);
-    graph.insert(87, 95);
-    graph.insert(88, 100);
-    graph.insert(89, 110);
-    graph.insert(90, 114);
-    graph.insert(91, 120);
-    graph.insert(92, 130);
-    graph.insert(93, 135);
-    graph.insert(94, 130);
-    graph.insert(95, 145);
-    graph.insert(96, 150);
-    graph.insert(97, 145);
-    graph.insert(98, 140);
-    graph.insert(99, 135);
 }
 
 void testdata::lowCoherence() {

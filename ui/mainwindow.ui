@@ -543,7 +543,7 @@ QPushButton:pressed {
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <property name="elideMode">
          <enum>Qt::ElideNone</enum>
@@ -1195,7 +1195,7 @@ font: 75 18pt &quot;Noto Sans Glagolitic&quot;;</string>
            <bool>false</bool>
           </property>
           <property name="maximum">
-           <number>100</number>
+           <number>60</number>
           </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
