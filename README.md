@@ -10,15 +10,18 @@ Sayyidah Akindele       101192813
 
 Division of labour
 ------------------
-Annabel
+- Annabel
   - Traceability matrix
   - Program Logic
-Ezhill
+
+- Ezhill
   - UML diagram
   - Program Logic
+
 Francesca
   - Sequence diagrams
   - Database
+
 Sayyidah
   - Use cases
   - UI
