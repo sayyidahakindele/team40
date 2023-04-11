@@ -60,17 +60,16 @@ public:
 
 private slots:
 
+    void on_powerButton_clicked();
     void on_upButton_clicked();
     void on_downButton_clicked();
     void on_okButton_clicked();
     void on_menuButton_clicked();
     void on_backButton_clicked();
-    void on_powerButton_clicked();
 
 private:
     Ui::MainWindow *ui;
     bool power;
-    bool view = false;
     settings setting;
     loghistory log;
     scores s;
