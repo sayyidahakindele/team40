@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     // default settings
     ui ->views ->setCurrentIndex(0);
+//    ui ->hrButton ->setVisible(false);
     ui ->views ->setVisible(false);
     ui ->battery ->setVisible(false);
     ui ->upButton ->setEnabled(false);
@@ -24,15 +25,8 @@ MainWindow::~MainWindow() {
 
 // power button toggle
 void MainWindow::on_powerButton_clicked() {
-    //toggles between disabled menu and main menu
-    if (ui ->views ->currentIndex() == 1) {
-        endSession();
-    }
     if (power == true) {
         power = false;
-        if (ui ->views ->currentIndex() == 1) {
-            qDebug() << "session view";
-        }
         ui ->mainOptions ->clear();
     } else {
         power = true;
@@ -147,6 +141,7 @@ void MainWindow::on_backButton_clicked() {
 }
 
 void MainWindow::changePowerStatus(bool status) {
+    ui ->views ->setCurrentIndex(0);
     ui ->views ->setVisible(status);
     ui ->battery ->setVisible(status);
     ui ->upButton ->setEnabled(status);
@@ -160,6 +155,10 @@ void MainWindow::changePowerStatus(bool status) {
 
 void MainWindow::updateMenu(QString option) {
     if (option == "CREATE NEW SESSION") {   // takes you to the session view tab
+        ui ->views ->setCurrentIndex(1);
+//        ui ->hrButton ->setVisible(true);
+
+
         int i= 0;
         double achieveSum=0;
         int currentPace = setting.getPace();
@@ -356,6 +355,7 @@ void MainWindow::endSession() {
     // call session ->session();
     qDebug() << "session saved!";
     ui ->views ->setCurrentIndex(0);
+//    ui ->hrButton ->setVisible(false);
     ui ->mainOptions ->clear();
     ui ->heading ->setText("SESSIONS");
     // if (log is empty)
@@ -365,3 +365,5 @@ void MainWindow::endSession() {
 void simulateBreathPace(QTimer& timer, int pace, QSlider& slide) {
     qDebug() << "hi";
 }
+
+
