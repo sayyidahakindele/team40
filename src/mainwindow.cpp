@@ -22,6 +22,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui ->okButton ->setEnabled(false);
     ui ->backButton ->setEnabled(false);
     ui ->contactButton ->setVisible(false);
+
+    updateLights(2); // for testing purposes
 }
 
 /*  ~MainWindow()
@@ -386,4 +388,12 @@ void MainWindow::endSession() {
 //    qDebug() << "hi";
 //}
 
-
+void MainWindow::updateLights(int color) {
+    if (color == 1) {
+        ui ->coherenceLevel ->setStyleSheet("QLabel { color: red; background-color: red;}");
+    } else if (color == 2) {
+        ui ->coherenceLevel ->setStyleSheet("QLabel { color: blue; background-color: blue;}");
+    } else if (color == 3) {
+        ui ->coherenceLevel ->setStyleSheet("QLabel { color: green; background-color: green;}");
+    }
+}
