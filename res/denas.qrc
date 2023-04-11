@@ -9,7 +9,5 @@
         <file>buttons/rightButton.svg</file>
         <file>buttons/upButton.svg</file>
         <file>buttons/chargeButton.svg</file>
-        <file>buttons/hrButton.svg</file>
-        <file>buttons/HRButton.png</file>
     </qresource>
 </RCC>
