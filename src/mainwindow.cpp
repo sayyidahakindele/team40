@@ -162,11 +162,12 @@ void MainWindow::updateMenu(QString option) {
     if (option == "CREATE NEW SESSION") {   // takes you to the session view tab
         int i= 0;
         double achieveSum=0;
+        testdata *data = new testdata(qrand()%4);
 
         //Timer
         QTimer timer;
         QTimer countdown;
-        int countTime= 100;
+        int countTime= 10; //change to 100
 
         //set timer display
         QLCDNumber *coh= ui->coherence;
@@ -175,12 +176,13 @@ void MainWindow::updateMenu(QString option) {
 
         s.setAchievement();
         ui ->views ->setCurrentIndex(1);
-        testdata *data = new testdata(qrand()%4);
         QMap<int, int> graph = data ->getGraph();
         QVector<double> arrScores = data ->getScores();
 
         startTimer(timer, countdown, *tracker, countTime);
 
+        coh->display(0);
+        ach->display(0);
         QObject::connect(&timer, &QTimer::timeout, [&](){
             updateDisplay(timer, *coh, *ach, arrScores, i, achieveSum);
         });
@@ -189,14 +191,13 @@ void MainWindow::updateMenu(QString option) {
         QTimer::singleShot(100000,&l,&QEventLoop::quit);
         l.exec();
         qDebug() << "Session finished";
-<<<<<<< HEAD
+
 
     } else if (option == "SETTINGS") {      // creates sub menu by clearing current items and replacing it with submenu items. sets the current row to the first one and changes the heading
-=======
         endSession();
         //startSession
     } else if (option == "SETTINGS") {
->>>>>>> 690cbd7d22e76a6186f883a71a8f986d2a4bdceb
+
         ui ->mainOptions ->clear();
         ui ->heading ->setText("SETTINGS");
         QListWidgetItem *challengeLevel = new QListWidgetItem("CHANGE CHALLENGE LEVEL");
@@ -312,7 +313,7 @@ void MainWindow::countDown() {
     ui ->countdown ->setVisible(false);
 }
 
-<<<<<<< HEAD
+
 //starts the timer and updates its display in session
 void MainWindow::startTimer(QTimer& timer, QTimer& countdown, QLCDNumber& tracker, int& countTime)
 {
@@ -320,6 +321,7 @@ void MainWindow::startTimer(QTimer& timer, QTimer& countdown, QLCDNumber& tracke
     timer.setSingleShot(false);
 
     countdown.setInterval(1000);
+    tracker.display(countTime);
 
     QObject::connect(&countdown, &QTimer::timeout, [&](){
         if(countTime > 0){
@@ -328,6 +330,7 @@ void MainWindow::startTimer(QTimer& timer, QTimer& countdown, QLCDNumber& tracke
         }
         else{
             countdown.stop();
+            timer.stop();
             qDebug() << "Timer Up!";
         }
     });
@@ -341,7 +344,8 @@ void MainWindow::updateDisplay(QTimer& timer, QLCDNumber& coh, QLCDNumber& ach, 
 {
     if(i< arrScores.size()){
         double score= arrScores[i];
-        achieveSum= s.getAchievement(score, achieveSum);
+        achieveSum= s.getAchievement(score, achieveSum); //setting.getLevel
+
         coh.display(score);
         ach.display(achieveSum);
         i++;
@@ -351,7 +355,8 @@ void MainWindow::updateDisplay(QTimer& timer, QLCDNumber& coh, QLCDNumber& ach, 
         qDebug() << "Achievement Sum:" << achieveSum;
         qDebug() << "Timer Up!";
     }
-=======
+}
+
 void MainWindow::endSession() {
     // call session ->session();
     qDebug() << "session saved!";
@@ -360,5 +365,5 @@ void MainWindow::endSession() {
     ui ->heading ->setText("SESSIONS");
     // if (log is empty)
     ui ->mainOptions ->addItem("EMPTY");
->>>>>>> 690cbd7d22e76a6186f883a71a8f986d2a4bdceb
+
 }
