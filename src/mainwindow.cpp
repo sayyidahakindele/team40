@@ -200,15 +200,6 @@ void MainWindow::updateMenu(QString option) {
         QTimer::singleShot(100000,&l,&QEventLoop::quit);
         l.exec();
         qDebug() << "Session finished";
-
-
-    } else if (option == "SETTINGS") {      // creates sub menu by clearing current items and replacing it with submenu items. sets the current row to the first one and changes the heading
-        endSession();
-        //startSession
-    } else if (option == "SETTINGS") {
-
-        endSession();
-        //startSession
     } else if (option == "SETTINGS") {
         ui ->mainOptions ->clear();
         ui ->heading ->setText("SETTINGS");
