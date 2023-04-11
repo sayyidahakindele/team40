@@ -6,6 +6,8 @@
 #include <QTimer>
 #include <QVector>
 #include <QLCDNumber>
+#include <QSlider>
+
 #include "testdata.h"
 #include "settings.h"
 #include "loghistory.h"
@@ -35,11 +37,9 @@ public:
    // session graphics
    void startTimer(QTimer& timer, QTimer& countdown, QTimer& bpace, QLCDNumber& tracker, int& countTime);
    void updateDisplay(QTimer& timer, QLCDNumber& coh, QLCDNumber& ach, QVector<double>& arrScores, int& i, double& achieveSum);
-   void updateScores(int coherence, int achievement);
    void simulateGraph();
-   void updateTimer();
    void updateLights(int color);
-   void simulateBreathPace(int pace);
+   void simulateBreathPace(QTimer& timer, int pace, QSlider& slide);
    void battery();
 
    // void startSession():

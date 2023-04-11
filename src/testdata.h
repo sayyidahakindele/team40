@@ -16,12 +16,12 @@ class testdata
         void mediumCoherence();
         void highCoherence();
 
-        QMap<int, int> getGraph();
+        int* getGraph();
         QVector<double> getScores();
 
 
      private:
-        QMap<int, int> graph;
+        int graph[100];
         QVector<double> scores;
 };
 

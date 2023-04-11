@@ -162,28 +162,35 @@ void MainWindow::updateMenu(QString option) {
     if (option == "CREATE NEW SESSION") {   // takes you to the session view tab
         int i= 0;
         double achieveSum=0;
+        int currentPace = setting.getPace();
+        testdata *data = new testdata(qrand()%3);
 
         //Timer
         QTimer timer;
         QTimer countdown;
-        QTimer pace;
+        QTimer paceTime;
         int countTime= 100;
 
         //set timer display
-        QLCDNumber *coh= ui->coherence;
+        QLCDNumber *coh = ui->coherence;
         QLCDNumber *ach = ui->achievement;
-        QLCDNumber *tracker= ui->timer;
+        QLCDNumber *tracker = ui->timer;
+        QSlider *breathPace = ui ->breathing;
 
         s.setAchievement();
         ui ->views ->setCurrentIndex(1);
-        testdata *data = new testdata(qrand()%3);
-        QMap<int, int> graph = data ->getGraph();
+        int* graph = data ->getGraph();
+        for (int var = 0; var < 100; ++var) {
+            qDebug() << graph[var];
+        }
         QVector<double> arrScores = data ->getScores();
 
-        startTimer(timer, countdown, pace, *tracker, countTime);
+        startTimer(timer, countdown, paceTime, *tracker, countTime);
 
         QObject::connect(&timer, &QTimer::timeout, [&](){
             updateDisplay(timer, *coh, *ach, arrScores, i, achieveSum);
+//            simulateBreathPace(paceTime, currentPace, *breathPace);
+
         });
 
         QEventLoop l;
@@ -329,6 +336,7 @@ void MainWindow::updateDisplay(QTimer& timer, QLCDNumber& coh, QLCDNumber& ach, 
         qDebug() << "Timer Up!";
     }
  }
+
 void MainWindow::endSession() {
     // call session ->session();
     qDebug() << "session saved!";
@@ -337,4 +345,8 @@ void MainWindow::endSession() {
     ui ->heading ->setText("SESSIONS");
     // if (log is empty)
     ui ->mainOptions ->addItem("EMPTY");
+}
+
+void simulateBreathPace(QTimer& timer, int pace, QSlider& slide) {
+    qDebug() << "hi";
 }
