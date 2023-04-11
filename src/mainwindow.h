@@ -27,7 +27,6 @@ public:
 
    void changePowerStatus(bool status);
    void updateMenu(QString option);
-   void countDown();
    void printHistories();
    void printHistory(int id);
    void session(int pace, int level, QMap<int, int>, QVector<double>);
@@ -67,9 +66,12 @@ private slots:
     void on_menuButton_clicked();
     void on_backButton_clicked();
 
+    void on_contactButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     bool power;
+    bool contact;
     settings setting;
     loghistory log;
     scores s;
