@@ -1,0 +1,179 @@
+USE CASE 1: Turn Device On
+Primary Actor
+-	Device User
+Precondition
+-	User has a device.
+Main Success Scenario
+1.	User presses the power button.
+2.	The device turns on.
+Postcondition
+-	The device has been turned on and is waiting on the main menu page.
+Extensions
+1.	The device does not turn on
+-	If the device does not turn on, then the user is required to charge the device battery. The simulation should be ended so the device can recharge.
+
+
+
+
+
+USE CASE 2: Turn Device Off
+Primary Actor
+-	Device User
+Precondition
+-	User has a device.
+Main Success Scenario
+1.	User presses the power button while the device is on.
+2.	The device powers off the display.
+3.	Device controls become disabled.
+Postcondition
+-	The device has been turned off and is not consuming power.
+
+
+
+
+
+USE CASE 3: Change challenge level
+Primary Actor
+-	Device User
+Precondition
+-	User is on the main menu display page.
+Main Success Scenario
+1.	User presses Down button until SETTING icon is selected.
+2.	User presses Ok button to open submenu.
+3.	User presses Down button until CHANGE CHALLENGE LEVEL is selected.
+4.	User presses Ok button to open submenu.
+5.	User presses Down until desired level is selected.
+6.	User presses Ok button to save setting.
+Postcondition
+-	The challenge level has been adjusted to the user’s desired level.
+Related Information
+-	Use case can be ended at any time if the user presses the Back button. By doing so, the
+case will end, and the user will return to the device’s previous page.
+-	Use case can be ended at any time if the user presses the Menu button. By doing so,
+the case will end, and the user will return to the device’s main menu.
+-	If user doesn’t press ok button, selected challenge level doesn’t get saved.
+
+
+
+
+
+
+USE CASE 4: Change breath pace
+Primary Actor
+-	Device User
+Precondition
+-	User is on the main menu display page.
+Main Success Scenario
+1.	User presses Down button until SETTING icon is selected.
+2.	User presses Ok button to open submenu.
+3.	User presses Down button until CHANGE BREATH PACE is selected.
+4.	User presses Ok button to open submenu.
+5.	User presses Down until desired pace is selected.
+6.	User presses Ok button to save setting.
+Postcondition
+-	The breath pace has been adjusted to the user’s desired level.
+Related Information
+-	Use case can be ended at any time if the user presses the Back button. By doing so, the
+case will end, and the user will return to the device’s previous page.
+-	Use case can be ended at any time if the user presses the Menu button. By doing so,
+the case will end, and the user will return to the device’s main menu.
+-	If user doesn’t press ok button, selected breath pace doesn’t get saved.
+
+
+
+
+
+USE CASE 5: View log history
+Primary Actor
+-	Device User
+Precondition
+-	User is on the main menu display page.
+Main Success Scenario
+1.	User presses Down button until HISTORY icon is selected.
+2.	User presses Ok button to open submenu.
+3.	User presses Down button until VIEW is selected.
+4.	User presses Ok button to open submenu.
+Postcondition
+-	All histories are displayed.
+Extensions
+1.	If user wants to see a single summary
+-	If the user wants to see the information of a single summary, the user presses Ok button to display all information.
+2.	If user wants to delete a single summary
+-	If the user wants to delete the information of a single summary, the user presses Ok button to display all information, then presses Ok button to select delete session.
+Related Information
+-	Use case can be ended at any time if the user presses the Back button. By doing so, the
+case will end, and the user will return to the device’s previous page.
+-	Use case can be ended at any time if the user presses the Menu button. By doing so,
+the case will end, and the user will return to the device’s main menu.
+-	If user doesn’t press ok button, selected challenge level doesn’t get saved.
+
+
+
+
+
+USE CASE 6: Clear history
+Primary Actor
+-	Device User
+Precondition
+-	User is on the main menu display page.
+Main Success Scenario
+1.	User presses Down button until HISTORY icon is selected.
+2.	User presses Ok button to open submenu.
+3.	User presses Down button until CLEAR is selected.
+4.	User presses Ok button to open submenu.
+5.	User presses Ok to select yes icon.
+Postcondition
+-	All histories are destroyed.
+Extensions
+1.	If user changes their mind
+-	If the user does not want to clear all histories, the user selects no to return to the main menu.
+Related Information
+-	Use case can be ended at any time if the user presses the Back button. By doing so, the
+case will end, and the user will return to the device’s previous page.
+-	Use case can be ended at any time if the user presses the Menu button. By doing so,
+the case will end, and the user will return to the device’s main menu.
+-	If user doesn’t press ok button, selected challenge level doesn’t get saved.
+
+
+
+
+
+USE CASE 7: Start a session
+Primary Actor
+-	Device measuring gadgets
+Precondition
+-	Desired challenge level and breath pace has been selected.
+-	The device has been connected to measuring gadgets.
+Main Success Scenario
+1. Gadget measures heart rate and outputs heart rate variability graph
+2. Coherence score and achievement is calculated for past 5 seconds
+3. Step 1 and 2 repeated until the session ends or is ended.
+Postcondition
+-	Summary of session is displayed
+Extensions
+- 3a. The electrode no longer senses skin.
+- 3a1. Electrode stops outputting an electrical current.
+- 3a2. Device pauses the Time of Therapy display.
+- 3a3. If electrode senses skin once again, return to step 1. Otherwise, end use case.
+Related Information
+- Use case can be ended at any time if the user presses the Back button. By doing so, the session will end, and the user will return to the session;s summary
+
+
+
+
+USE CASE 8: Save a session
+Primary Actor
+-	Device User
+Precondition
+-	The device is in the middle of a session, or a session has just concluded.
+Main Success Scenario
+1.	User presses Ok button.
+2.	The device saves the current session’s information to the log history.
+3.	The device returns the user to the main menu.
+Postcondition
+-	Session has been saved to the device’s history.
+Extensions
+2.	User presses Back button
+-	The device saves current session information to history
+-	The user is returned to the summary of session
+

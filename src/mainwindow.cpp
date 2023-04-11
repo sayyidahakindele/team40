@@ -162,34 +162,55 @@ void MainWindow::updateMenu(QString option) {
     if (option == "CREATE NEW SESSION") {   // takes you to the session view tab
         int i= 0;
         double achieveSum=0;
+<<<<<<< HEAD
         testdata *data = new testdata(qrand()%4);
+=======
+        int currentPace = setting.getPace();
+        testdata *data = new testdata(qrand()%3);
+>>>>>>> dda03925f4fca8bea2be3b6fe855bbaf19f00f42
 
         //Timer
         QTimer timer;
         QTimer countdown;
+<<<<<<< HEAD
         int countTime= 10; //change to 100
+=======
+        QTimer paceTime;
+        int countTime= 100;
+>>>>>>> dda03925f4fca8bea2be3b6fe855bbaf19f00f42
 
         //set timer display
-        QLCDNumber *coh= ui->coherence;
+        QLCDNumber *coh = ui->coherence;
         QLCDNumber *ach = ui->achievement;
-        QLCDNumber *tracker= ui->timer;
+        QLCDNumber *tracker = ui->timer;
+        QSlider *breathPace = ui ->breathing;
 
         s.setAchievement();
         ui ->views ->setCurrentIndex(1);
+<<<<<<< HEAD
         QMap<int, int> graph = data ->getGraph();
+=======
+        int* graph = data ->getGraph();
+        for (int var = 0; var < 100; ++var) {
+            qDebug() << graph[var];
+        }
+>>>>>>> dda03925f4fca8bea2be3b6fe855bbaf19f00f42
         QVector<double> arrScores = data ->getScores();
 
-        startTimer(timer, countdown, *tracker, countTime);
+        startTimer(timer, countdown, paceTime, *tracker, countTime);
 
         coh->display(0);
         ach->display(0);
         QObject::connect(&timer, &QTimer::timeout, [&](){
             updateDisplay(timer, *coh, *ach, arrScores, i, achieveSum);
+//            simulateBreathPace(paceTime, currentPace, *breathPace);
+
         });
 
         QEventLoop l;
         QTimer::singleShot(100000,&l,&QEventLoop::quit);
         l.exec();
+<<<<<<< HEAD
         qDebug() << "Session finished";
 
 
@@ -198,6 +219,11 @@ void MainWindow::updateMenu(QString option) {
         //startSession
     } else if (option == "SETTINGS") {
 
+=======
+        endSession();
+        //startSession
+    } else if (option == "SETTINGS") {
+>>>>>>> dda03925f4fca8bea2be3b6fe855bbaf19f00f42
         ui ->mainOptions ->clear();
         ui ->heading ->setText("SETTINGS");
         QListWidgetItem *challengeLevel = new QListWidgetItem("CHANGE CHALLENGE LEVEL");
@@ -232,29 +258,10 @@ void MainWindow::updateMenu(QString option) {
         ui ->mainOptions ->addItem("4");
         ui ->mainOptions ->addItem("5");
         ui ->mainOptions ->addItem("6");
-        ui ->mainOptions ->addItem("7");
-        ui ->mainOptions ->addItem("8");
-        ui ->mainOptions ->addItem("9");
         ui ->mainOptions ->addItem("10");
-        ui ->mainOptions ->addItem("11");
         ui ->mainOptions ->addItem("12");
-        ui ->mainOptions ->addItem("13");
-        ui ->mainOptions ->addItem("14");
         ui ->mainOptions ->addItem("15");
-        ui ->mainOptions ->addItem("16");
-        ui ->mainOptions ->addItem("17");
-        ui ->mainOptions ->addItem("18");
-        ui ->mainOptions ->addItem("19");
         ui ->mainOptions ->addItem("20");
-        ui ->mainOptions ->addItem("21");
-        ui ->mainOptions ->addItem("22");
-        ui ->mainOptions ->addItem("23");
-        ui ->mainOptions ->addItem("24");
-        ui ->mainOptions ->addItem("25");
-        ui ->mainOptions ->addItem("26");
-        ui ->mainOptions ->addItem("27");
-        ui ->mainOptions ->addItem("28");
-        ui ->mainOptions ->addItem("29");
         ui ->mainOptions ->addItem("30");
         ui ->mainOptions ->setCurrentRow(setting.getPace() - 1);
     } else if (option == "RESET") {
@@ -313,15 +320,20 @@ void MainWindow::countDown() {
     ui ->countdown ->setVisible(false);
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> dda03925f4fca8bea2be3b6fe855bbaf19f00f42
 //starts the timer and updates its display in session
-void MainWindow::startTimer(QTimer& timer, QTimer& countdown, QLCDNumber& tracker, int& countTime)
+void MainWindow::startTimer(QTimer& timer, QTimer& countdown, QTimer& bpace, QLCDNumber& tracker, int& countTime) // add timers for graph, breath pace
 {
     timer.setInterval(5000);
     timer.setSingleShot(false);
 
     countdown.setInterval(1000);
     tracker.display(countTime);
+
+    bpace.setInterval(setting.getPace());
 
     QObject::connect(&countdown, &QTimer::timeout, [&](){
         if(countTime > 0){
@@ -355,7 +367,11 @@ void MainWindow::updateDisplay(QTimer& timer, QLCDNumber& coh, QLCDNumber& ach, 
         qDebug() << "Achievement Sum:" << achieveSum;
         qDebug() << "Timer Up!";
     }
+<<<<<<< HEAD
 }
+=======
+ }
+>>>>>>> dda03925f4fca8bea2be3b6fe855bbaf19f00f42
 
 void MainWindow::endSession() {
     // call session ->session();
@@ -365,5 +381,12 @@ void MainWindow::endSession() {
     ui ->heading ->setText("SESSIONS");
     // if (log is empty)
     ui ->mainOptions ->addItem("EMPTY");
+<<<<<<< HEAD
 
+=======
+}
+
+void simulateBreathPace(QTimer& timer, int pace, QSlider& slide) {
+    qDebug() << "hi";
+>>>>>>> dda03925f4fca8bea2be3b6fe855bbaf19f00f42
 }
