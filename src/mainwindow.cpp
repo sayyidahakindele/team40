@@ -250,9 +250,6 @@ void MainWindow::updateMenu(QString option) {
         ui ->okButton ->setEnabled(false);
         ui ->backButton ->setEnabled(false);
         ui ->powerButton ->setEnabled(false);
-        //put following code in on click function for contact button
-
-
     } else if (option == "SETTINGS") {
         ui ->mainOptions ->clear();
         ui ->heading ->setText("SETTINGS");
@@ -288,13 +285,31 @@ void MainWindow::updateMenu(QString option) {
         ui ->mainOptions ->addItem("4");
         ui ->mainOptions ->addItem("5");
         ui ->mainOptions ->addItem("6");
+        ui ->mainOptions ->addItem("7");
+        ui ->mainOptions ->addItem("8");
+        ui ->mainOptions ->addItem("9");
         ui ->mainOptions ->addItem("10");
+        ui ->mainOptions ->addItem("11");
         ui ->mainOptions ->addItem("12");
+        ui ->mainOptions ->addItem("13");
+        ui ->mainOptions ->addItem("14");
         ui ->mainOptions ->addItem("15");
+        ui ->mainOptions ->addItem("16");
+        ui ->mainOptions ->addItem("17");
+        ui ->mainOptions ->addItem("18");
+        ui ->mainOptions ->addItem("19");
         ui ->mainOptions ->addItem("20");
+        ui ->mainOptions ->addItem("21");
+        ui ->mainOptions ->addItem("22");
+        ui ->mainOptions ->addItem("23");
+        ui ->mainOptions ->addItem("24");
+        ui ->mainOptions ->addItem("25");
+        ui ->mainOptions ->addItem("26");
+        ui ->mainOptions ->addItem("27");
+        ui ->mainOptions ->addItem("28");
+        ui ->mainOptions ->addItem("29");
         ui ->mainOptions ->addItem("30");
         ui ->mainOptions ->setCurrentRow(setting.getPace() - 1);
-        qDebug() << setting.getPace();
     } else if (option == "RESET") {
         ui ->mainOptions ->clear();
         ui ->heading ->setText("ARE YOU SURE YOU WANT TO RESET?");
