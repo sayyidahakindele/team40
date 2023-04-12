@@ -25,6 +25,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+   void startSession();
    void changePowerStatus(bool status);
    void updateMenu(QString option);
    void printHistories();

@@ -176,47 +176,54 @@ void MainWindow::on_backButton_clicked() {
 }
 
 void MainWindow::on_contactButton_clicked() {
-    if (contact == true) {
-        contact = false;
-        int i= 0;
-        double achieveSum=0;
-        int currentPace = setting.getPace();
-        testdata *data = new testdata(qrand()%3);
-
-        //Timer
-        QTimer timer;
-        QTimer countdown;
-        int countTime= 10; //change to 100
-        QTimer paceTime;
-
-        //set timer display
-        QLCDNumber *coh = ui->coherence;
-        QLCDNumber *ach = ui->achievement;
-        QLCDNumber *tracker = ui->timer;
-        QSlider *breathPace = ui ->breathing;
-
-        s.setAchievement();
-
-        int* graph = data ->getGraph();
-        QVector<double> arrScores = data ->getScores();
-
-        startTimer(timer, countdown, paceTime, *tracker, countTime);
-
-        coh->display(0);
-        ach->display(0);
-        QObject::connect(&timer, &QTimer::timeout, [&](){
-            updateDisplay(timer, *coh, *ach, arrScores, i, achieveSum);
-
-        });
-
-        QEventLoop l;
-        QTimer::singleShot(100000,&l,&QEventLoop::quit);
-        l.exec();
-        qDebug() << "Session finished";
-    } else {
+    if (contact == false) {
         contact = true;
-        qDebug() << "on now";
+        qDebug() << "Device is now in contact with skin.";
+        startSession();
+    } else {
+        contact=false;
+        qDebug() << "Device is no longer in contact with skin";
+        //add a disrupt session sonmeehing
     }
+}
+
+void MainWindow::startSession(){
+    int i= 0;
+    double achieveSum=0;
+    int currentPace = setting.getPace();
+    testdata *data = new testdata(qrand()%3);
+
+    //Timer
+    QTimer timer;
+    QTimer countdown;
+    int countTime= 10; //change to 100
+    QTimer paceTime;
+
+    //set timer display
+    QLCDNumber *coh = ui->coherence;
+    QLCDNumber *ach = ui->achievement;
+    QLCDNumber *tracker = ui->timer;
+    QSlider *breathPace = ui ->breathing;
+
+    s.setAchievement();
+
+    int* graph = data ->getGraph();
+    QVector<double> arrScores = data ->getScores();
+
+    startTimer(timer, countdown, paceTime, *tracker, countTime);
+
+    coh->display(0);
+    ach->display(0);
+    QObject::connect(&timer, &QTimer::timeout, [&](){
+        updateDisplay(timer, *coh, *ach, arrScores, i, achieveSum);
+
+    });
+
+    QEventLoop l;
+    QTimer::singleShot(100000,&l,&QEventLoop::quit);
+    l.exec();
+    qDebug() << "Session finished";
+    contact =false;
 }
 
 void MainWindow::changePowerStatus(bool status) {
@@ -287,6 +294,7 @@ void MainWindow::updateMenu(QString option) {
         ui ->mainOptions ->addItem("20");
         ui ->mainOptions ->addItem("30");
         ui ->mainOptions ->setCurrentRow(setting.getPace() - 1);
+        qDebug() << setting.getPace();
     } else if (option == "RESET") {
         ui ->mainOptions ->clear();
         ui ->heading ->setText("ARE YOU SURE YOU WANT TO RESET?");
