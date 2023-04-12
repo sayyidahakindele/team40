@@ -117,10 +117,11 @@ void MainWindow::on_okButton_clicked() {
     extension: if in session view, stops timer and enables all buttons
 */
 void MainWindow::on_menuButton_clicked() {
-//    if (ui ->views ->currentIndex() == 1) {
-//        endSession();
-//    }
-    contact= false;
+    if (ui ->views ->currentIndex() == 1) {
+        //endSession();
+        contact = false;
+        ui ->contactButton ->setStyleSheet("QPushButton {image: url(:/buttons/disabled.png);background-color: rgb(108, 147, 136); border-radius: 5px;}");
+    }
     ui ->views ->setCurrentIndex(0);
     ui ->contactButton ->setVisible(false);
     ui ->saveButton ->setVisible(false);
@@ -195,20 +196,19 @@ void MainWindow::on_contactButton_clicked() {
 
     if (contact == false) {
         contact = true;
+        ui ->contactButton ->setStyleSheet("QPushButton {image: url(:/buttons/enabled.png);background-color: rgb(108, 147, 136); border-radius: 5px;}");
         qDebug() << "Device is now in contact with skin.";
         ui ->saveButton ->setVisible(true);
         startSession(timer, countdown);
 
     } else {
         contact=false;
+        ui ->contactButton ->setStyleSheet("QPushButton {image: url(:/buttons/disabled.png);background-color: rgb(108, 147, 136); border-radius: 5px;}");
         ui ->saveButton ->setVisible(false);
         qDebug() << "Device is no longer in contact with skin";
         //disconnect(ui->contactButton, &QPushButton::clicked, nullptr, nullptr);
         endSession(timer, countdown);
         //add a disrupt session something
-//        QObject::connect(hr, &QPushButton::clicked, [=](){
-//            endSession(timer, countdown);
-//        });
     }
 }
 

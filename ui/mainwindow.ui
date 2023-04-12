@@ -485,8 +485,8 @@ QPushButton:pressed {
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
-          <item row="0" column="1">
-           <widget class="QPushButton" name="contactButton">
+          <item row="0" column="2">
+           <widget class="QPushButton" name="saveButton">
             <property name="minimumSize">
              <size>
               <width>40</width>
@@ -505,11 +505,14 @@ QPushButton:pressed {
               <height>40</height>
              </size>
             </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
             <property name="styleSheet">
              <string notr="true">QPushButton {
-image: url(:/buttons/hrButton.svg);
-background-color: rgb(108, 147, 136)rgb(108, 147, 136);
-border-radius: 10px;
+image: url(:/buttons/saveButton.png);
+background-color: rgb(108, 147, 136);
+border-radius: 5px;
 }
 
 QPushButton:pressed {
@@ -566,8 +569,8 @@ QPushButton:pressed {
             </property>
            </widget>
           </item>
-          <item row="0" column="2">
-           <widget class="QPushButton" name="saveButton">
+          <item row="0" column="1">
+           <widget class="QPushButton" name="contactButton">
             <property name="minimumSize">
              <size>
               <width>40</width>
@@ -586,18 +589,11 @@ QPushButton:pressed {
               <height>40</height>
              </size>
             </property>
-            <property name="autoFillBackground">
-             <bool>false</bool>
-            </property>
             <property name="styleSheet">
              <string notr="true">QPushButton {
-image: url(:/buttons/saveButton.png);
+image: url(:/buttons/disabled.png);
 background-color: rgb(108, 147, 136);
 border-radius: 5px;
-}
-
-QPushButton:pressed {
-	background-color: #ffd300;
 }</string>
             </property>
             <property name="text">
@@ -1293,6 +1289,24 @@ font: 75 18pt &quot;Noto Sans Glagolitic&quot;;</string>
           </property>
           <property name="autoFillBackground">
            <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QSlider::groove:horizontal {
+    border: none;
+    background: none;
+    height: 0;
+    margin: 0;
+}
+
+QSlider::handle:horizontal {
+    background-color: rgb(0, 0, 0);
+    border: 1px solid  rgb(0, 0, 0);
+    width: 10px;
+    height: 10px;
+	margin: -6px 0;
+    border-radius: 5px;
+}
+</string>
           </property>
           <property name="maximum">
            <number>60</number>
