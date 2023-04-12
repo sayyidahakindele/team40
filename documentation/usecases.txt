@@ -105,7 +105,6 @@ Related Information
 case will end, and the user will return to the device’s previous page.
 -	Use case can be ended at any time if the user presses the Menu button. By doing so,
 the case will end, and the user will return to the device’s main menu.
--	If user doesn’t press ok button, selected challenge level doesn’t get saved.
 
 
 
@@ -132,7 +131,6 @@ Related Information
 case will end, and the user will return to the device’s previous page.
 -	Use case can be ended at any time if the user presses the Menu button. By doing so,
 the case will end, and the user will return to the device’s main menu.
--	If user doesn’t press ok button, selected challenge level doesn’t get saved.
 
 
 
@@ -143,7 +141,7 @@ Primary Actor
 -	Device measuring gadgets
 Precondition
 -	Desired challenge level and breath pace has been selected.
--	The device has been connected to measuring gadgets.
+-	User has clicked HRContact button.
 Main Success Scenario
 1. Gadget measures heart rate and outputs heart rate variability graph
 2. Coherence score and achievement is calculated for past 5 seconds
@@ -156,7 +154,9 @@ Extensions
 - 3a2. Device pauses the Time of Therapy display.
 - 3a3. If electrode senses skin once again, return to step 1. Otherwise, end use case.
 Related Information
-- Use case can be ended at any time if the user presses the Back button. By doing so, the session will end, and the user will return to the session;s summary
+- Use case can be ended at any time if the user presses the Menu button. By doing so, the session will end, and the user will return to the main menu. The session will NOT be saved.
+
+
 
 
 
@@ -167,13 +167,9 @@ Primary Actor
 Precondition
 -	The device is in the middle of a session, or a session has just concluded.
 Main Success Scenario
-1.	User presses Ok button.
+1.	User presses Save button.
 2.	The device saves the current session’s information to the log history.
-3.	The device returns the user to the main menu.
+3.	The device shows the user summary of the session
 Postcondition
 -	Session has been saved to the device’s history.
-Extensions
-2.	User presses Back button
--	The device saves current session information to history
--	The user is returned to the summary of session
 

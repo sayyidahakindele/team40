@@ -22,8 +22,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui ->okButton ->setEnabled(false);
     ui ->backButton ->setEnabled(false);
     ui ->contactButton ->setVisible(false);
-
-    updateLights(2); // for testing purposes
+    ui ->saveButton ->setVisible(false);
 }
 
 /*  ~MainWindow()
@@ -100,6 +99,7 @@ void MainWindow::on_okButton_clicked() {
         QString currentTab = ui ->mainOptions ->item(0) ->text();
         if (currentTab == "1 - BEGINNER") {
             setting.setLevel(ui ->mainOptions ->currentRow() + 1);
+
         } else if (currentTab == "1") {
             setting.setPace(ui ->mainOptions ->currentRow() + 1);
         }
@@ -117,6 +117,7 @@ void MainWindow::on_menuButton_clicked() {
     }
     ui ->views ->setCurrentIndex(0);
     ui ->contactButton ->setVisible(false);
+    ui ->saveButton ->setVisible(false);
     ui ->views ->setVisible(true);
     ui ->battery ->setVisible(true);
     ui ->upButton ->setEnabled(true);
@@ -175,76 +176,99 @@ void MainWindow::on_backButton_clicked() {
     }
 }
 
+/*  on_contactButton_clicked()
+    -----------------------------
+    functionality: simulates connecting/disconnecting measuring gadgets
+*/
 void MainWindow::on_contactButton_clicked() {
     if (contact == false) {
         contact = true;
         qDebug() << "Device is now in contact with skin.";
+        ui ->saveButton ->setVisible(true);
         startSession();
     } else {
         contact=false;
+        ui ->saveButton ->setVisible(false);
         qDebug() << "Device is no longer in contact with skin";
         //add a disrupt session sonmeehing
     }
 }
 
-void MainWindow::startSession(){
-    int i= 0;
-    int j=0;
-    double achieveSum=0;
-    int currentPace = 60/setting.getPace();
-    testdata *data = new testdata(qrand()%3);
-
-    //Slider
-    //paceSlider = new QSlider(Qt::Horizontal, this);
-//    breathPacer->setRange(0,30);//set the min and max vals
-//    breathPacer->setValue(0);
-
-    //Timer
-    QTimer timer; //timer for collecting coherence score every 5 secs
-    QTimer countdown; //timer shown in the session that countdown
-    QTimer paceTimer; //timer for collecting breath pace reading according to pace stting (1 - 30 secs)
-    paceTimer.setInterval(currentPace);
-
-    int countTime= 100; //change to 100
-
-    //set session displays
-    QLCDNumber *coh = ui->coherence;
-    QLCDNumber *ach = ui->achievement;
-    QLCDNumber *tracker = ui->timer;
-    QSlider *breathPacer = ui ->breathing; //creates a slider
-
-    breathPacer->setRange(0,20);//set the min and max vals
-    breathPacer->setValue(0);
-
-
-    s.setAchievement();
-
-    int* graph = data ->getGraph();
-    QVector<double> arrScores = data ->getScores();
-
-    startTimer(timer, countdown, paceTimer, *tracker, countTime);
-
-    coh->display(0);
-    ach->display(0);
-    QObject::connect(&timer, &QTimer::timeout, [&](){
-        updateDisplay(timer, *coh, *ach, arrScores, i, achieveSum);
-    });
-
-    QObject::connect(&paceTimer, &QTimer::timeout, [&](){
-        updateSlider(paceTimer, *breathPacer, arrScores, j, countTime);
-    });
-    //connect(paceTimer, &QTimer::timeout, this, &MainWindow::updateSlider);
-
-    paceTimer.start(currentPace);
-
-
-    QEventLoop l;
-    QTimer::singleShot(100000,&l,&QEventLoop::quit);
-    l.exec();
-    qDebug() << "Session finished";
-    contact =false;
+/*  on_saveButton_clicked()
+    -----------------------------
+    functionality: saves session and takes you the summary of the session
+*/
+void MainWindow::on_saveButton_clicked() {
+    qDebug() << "Session saved";
 }
 
+void MainWindow::startSession(){
+    int i= 0;
+        int j=0;
+        double achieveSum=0;
+        int currentPace = 60/setting.getPace();
+        testdata *data = new testdata(qrand()%3);
+
+        //Slider
+        //paceSlider = new QSlider(Qt::Horizontal, this);
+    //    breathPacer->setRange(0,30);//set the min and max vals
+    //    breathPacer->setValue(0);
+
+        //Timer
+        QTimer timer; //timer for collecting coherence score every 5 secs
+        QTimer countdown; //timer shown in the session that countdown
+        QTimer paceTimer; //timer for collecting breath pace reading according to pace stting (1 - 30 secs)
+        paceTimer.setInterval(currentPace);
+
+        int countTime= 100; //change to 100
+
+        //set session displays
+        QLCDNumber *coh = ui->coherence;
+        QLCDNumber *ach = ui->achievement;
+        QLCDNumber *tracker = ui->timer;
+        QSlider *breathPacer = ui ->breathing; //creates a slider
+
+        breathPacer->setRange(0,20);//set the min and max vals
+        breathPacer->setValue(0);
+
+
+        s.setAchievement();
+
+        int* graph = data ->getGraph();
+        QVector<double> arrScores = data ->getScores();
+
+        startTimer(timer, countdown, paceTimer, *tracker, countTime);
+
+        coh->display(0);
+        ach->display(0);
+        QObject::connect(&timer, &QTimer::timeout, [&](){
+            updateDisplay(timer, *coh, *ach, arrScores, i, achieveSum);
+        });
+
+        QObject::connect(&paceTimer, &QTimer::timeout, [&](){
+            updateSlider(paceTimer, *breathPacer, arrScores, j, countTime);
+        });
+        //connect(paceTimer, &QTimer::timeout, this, &MainWindow::updateSlider);
+
+        paceTimer.start(currentPace);
+
+
+        QEventLoop l;
+        QTimer::singleShot(100000,&l,&QEventLoop::quit);
+        l.exec();
+        qDebug() << "Session finished";
+        contact =false;
+}
+
+void MainWindow::endSession() {
+    // should only be called to end timer. If saved, done in another button
+    qDebug() << "time ended";
+}
+
+/*  changePowerStatus(bool)
+    -----------------------------
+    functionality: disables/enables buttons
+*/
 void MainWindow::changePowerStatus(bool status) {
     ui ->views ->setVisible(status);
     ui ->battery ->setVisible(status);
@@ -257,6 +281,10 @@ void MainWindow::changePowerStatus(bool status) {
     ui ->backButton ->setEnabled(status);
 }
 
+/*  updateMenu(QString)
+    -----------------------------
+    functionality: figures out what submenu to open and updates the menu view
+*/
 void MainWindow::updateMenu(QString option) {
     if (option == "CREATE NEW SESSION") {
         ui ->contactButton ->setVisible(true);
@@ -409,10 +437,11 @@ void MainWindow::updateDisplay(QTimer& timer, QLCDNumber& coh, QLCDNumber& ach, 
 {
     if(i< arrScores.size()){
         double score= arrScores[i];
-        achieveSum= s.getAchievement(score, achieveSum); //setting.getLevel
+        achieveSum= s.getAchievement(score, achieveSum);
 
         coh.display(score);
         ach.display(achieveSum);
+        updateLights(s.getColor(setting.getLevel(), score));
         i++;
     }
     else{
@@ -440,21 +469,22 @@ void MainWindow::updateSlider(QTimer& paceTimer, QSlider& paceSlider, QVector<do
     }
 }
 
-void MainWindow::endSession() {
-    // should only be called to end timer. If saved, done in another button
-    qDebug() << "time ended";
-}
-
 //void simulateBreathPace(QTimer& timer, int pace, QSlider& slide) {
 //    qDebug() << "hi";
 //}
 
+/*  updateLights()
+    -----------------------------
+    functionality: changes color of label depending on coherence
+*/
 void MainWindow::updateLights(int color) {
     if (color == 1) {
         ui ->coherenceLevel ->setStyleSheet("QLabel { color: red; background-color: red;}");
     } else if (color == 2) {
         ui ->coherenceLevel ->setStyleSheet("QLabel { color: blue; background-color: blue;}");
     } else if (color == 3) {
-        ui ->coherenceLevel ->setStyleSheet("QLabel { color: green; background-color: green;}");
+        ui ->coherenceLevel ->setStyleSheet("QLabel { color: green; background-color: green}");
     }
 }
+
+
