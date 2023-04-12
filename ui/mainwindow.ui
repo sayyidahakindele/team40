@@ -471,6 +471,9 @@ QPushButton:pressed {
          <property name="invertedAppearance">
           <bool>false</bool>
          </property>
+         <property name="format">
+          <string>%p%</string>
+         </property>
         </widget>
         <widget class="QWidget" name="gridLayoutWidget">
          <property name="geometry">
@@ -563,6 +566,54 @@ QPushButton:pressed {
             </property>
            </widget>
           </item>
+          <item row="0" column="2">
+           <widget class="QPushButton" name="saveButton">
+            <property name="minimumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+image: url(:/buttons/saveButton.png);
+background-color: rgb(108, 147, 136);
+border-radius: 5px;
+}
+
+QPushButton:pressed {
+	background-color: #ffd300;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="autoRepeat">
+             <bool>true</bool>
+            </property>
+            <property name="autoRepeatDelay">
+             <number>600</number>
+            </property>
+            <property name="autoRepeatInterval">
+             <number>150</number>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
         <zorder>menuButton</zorder>
@@ -582,7 +633,8 @@ QPushButton:pressed {
          <bool>false</bool>
         </property>
         <property name="styleSheet">
-         <string notr="true">font: 75 12pt &quot;Noto Sans Adlam&quot;;</string>
+         <string notr="true">font: 75 12pt &quot;Noto Sans Adlam&quot;;
+background-color: rgb(108, 147, 140);</string>
         </property>
         <property name="tabPosition">
          <enum>QTabWidget::North</enum>

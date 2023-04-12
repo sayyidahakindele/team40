@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui ->okButton ->setEnabled(false);
     ui ->backButton ->setEnabled(false);
     ui ->contactButton ->setVisible(false);
+    ui ->saveButton ->setVisible(false);
 }
 
 /*  ~MainWindow()
@@ -116,6 +117,7 @@ void MainWindow::on_menuButton_clicked() {
     }
     ui ->views ->setCurrentIndex(0);
     ui ->contactButton ->setVisible(false);
+    ui ->saveButton ->setVisible(false);
     ui ->views ->setVisible(true);
     ui ->battery ->setVisible(true);
     ui ->upButton ->setEnabled(true);
@@ -178,9 +180,11 @@ void MainWindow::on_contactButton_clicked() {
     if (contact == false) {
         contact = true;
         qDebug() << "Device is now in contact with skin.";
+        ui ->saveButton ->setVisible(true);
         startSession();
     } else {
         contact=false;
+        ui ->saveButton ->setVisible(false);
         qDebug() << "Device is no longer in contact with skin";
         //add a disrupt session sonmeehing
     }
