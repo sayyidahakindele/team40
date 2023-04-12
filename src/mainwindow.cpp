@@ -176,6 +176,10 @@ void MainWindow::on_backButton_clicked() {
     }
 }
 
+/*  on_contactButton_clicked()
+    -----------------------------
+    functionality: simulates connecting/disconnecting measuring gadgets
+*/
 void MainWindow::on_contactButton_clicked() {
     if (contact == false) {
         contact = true;
@@ -188,6 +192,14 @@ void MainWindow::on_contactButton_clicked() {
         qDebug() << "Device is no longer in contact with skin";
         //add a disrupt session sonmeehing
     }
+}
+
+/*  on_saveButton_clicked()
+    -----------------------------
+    functionality: saves session and takes you the summary of the session
+*/
+void MainWindow::on_saveButton_clicked() {
+    qDebug() << "Session saved";
 }
 
 void MainWindow::startSession(){
@@ -229,6 +241,15 @@ void MainWindow::startSession(){
     contact =false;
 }
 
+void MainWindow::endSession() {
+    // should only be called to end timer. If saved, done in another button
+    qDebug() << "time ended";
+}
+
+/*  changePowerStatus(bool)
+    -----------------------------
+    functionality: disables/enables buttons
+*/
 void MainWindow::changePowerStatus(bool status) {
     ui ->views ->setVisible(status);
     ui ->battery ->setVisible(status);
@@ -241,6 +262,10 @@ void MainWindow::changePowerStatus(bool status) {
     ui ->backButton ->setEnabled(status);
 }
 
+/*  updateMenu(QString)
+    -----------------------------
+    functionality: figures out what submenu to open and updates the menu view
+*/
 void MainWindow::updateMenu(QString option) {
     if (option == "CREATE NEW SESSION") {
         ui ->contactButton ->setVisible(true);
@@ -406,15 +431,14 @@ void MainWindow::updateDisplay(QTimer& timer, QLCDNumber& coh, QLCDNumber& ach, 
 
 }
 
-void MainWindow::endSession() {
-    // should only be called to end timer. If saved, done in another button
-    qDebug() << "time ended";
-}
-
 //void simulateBreathPace(QTimer& timer, int pace, QSlider& slide) {
 //    qDebug() << "hi";
 //}
 
+/*  updateLights()
+    -----------------------------
+    functionality: changes color of label depending on coherence
+*/
 void MainWindow::updateLights(int color) {
     if (color == 1) {
         ui ->coherenceLevel ->setStyleSheet("QLabel { color: red; background-color: red;}");
@@ -424,3 +448,5 @@ void MainWindow::updateLights(int color) {
         ui ->coherenceLevel ->setStyleSheet("QLabel { color: green; background-color: green}");
     }
 }
+
+

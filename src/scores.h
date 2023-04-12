@@ -2,26 +2,17 @@
 #define SCORES_H
 
 
-class scores
-{
-public:
-    //scores();
-    // metic function that takes in challenge level
-    // getChallengeLevel(int level)
+class scores {
+    public:
+        //functions
+        //set score to 0 for each new session
+        double setAchievement();
+        double getAchievement(double coherence, double& sum);
+        double getChallenge(double coherence);
+        int getColor(int level, double coherence);
 
-    //set score to 0 for each new session
-    double setAchievement();
-
-    double getAchievement(double coherence, double& sum);
-
-    double getChallenge(double coherence);
-
-    int getColor(int level, double coherence);
-
-    // int colorUpdate(coherence ...)
-    // return 1 if 0 red , if blue, if green
- private:
-    double achieveScore;
+     private:
+        double achieveScore;
 };
 
 #endif // SCORES_H
