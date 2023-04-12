@@ -14,8 +14,9 @@ public:
 
     double getAchievement(double coherence, double& sum);
 
-
     double getChallenge(double coherence);
+
+    int getColor(int level, double coherence);
 
     // int colorUpdate(coherence ...)
     // return 1 if 0 red , if blue, if green

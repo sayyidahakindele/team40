@@ -22,8 +22,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui ->okButton ->setEnabled(false);
     ui ->backButton ->setEnabled(false);
     ui ->contactButton ->setVisible(false);
-
-    updateLights(2); // for testing purposes
 }
 
 /*  ~MainWindow()
@@ -100,6 +98,7 @@ void MainWindow::on_okButton_clicked() {
         QString currentTab = ui ->mainOptions ->item(0) ->text();
         if (currentTab == "1 - BEGINNER") {
             setting.setLevel(ui ->mainOptions ->currentRow() + 1);
+
         } else if (currentTab == "1") {
             setting.setPace(ui ->mainOptions ->currentRow() + 1);
         }
@@ -196,7 +195,7 @@ void MainWindow::startSession(){
     //Timer
     QTimer timer;
     QTimer countdown;
-    int countTime= 10; //change to 100
+    int countTime= 100; //change to 100
     QTimer paceTime;
 
     //set timer display
@@ -388,10 +387,11 @@ void MainWindow::updateDisplay(QTimer& timer, QLCDNumber& coh, QLCDNumber& ach, 
 {
     if(i< arrScores.size()){
         double score= arrScores[i];
-        achieveSum= s.getAchievement(score, achieveSum); //setting.getLevel
+        achieveSum= s.getAchievement(score, achieveSum);
 
         coh.display(score);
         ach.display(achieveSum);
+        updateLights(s.getColor(setting.getLevel(), score));
         i++;
     }
     else{
@@ -417,6 +417,6 @@ void MainWindow::updateLights(int color) {
     } else if (color == 2) {
         ui ->coherenceLevel ->setStyleSheet("QLabel { color: blue; background-color: blue;}");
     } else if (color == 3) {
-        ui ->coherenceLevel ->setStyleSheet("QLabel { color: green; background-color: green;}");
+        ui ->coherenceLevel ->setStyleSheet("QLabel { color: green; background-color: green}");
     }
 }
