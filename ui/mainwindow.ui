@@ -1118,7 +1118,7 @@ font: 75 18pt &quot;Noto Sans Glagolitic&quot;;</string>
            </palette>
           </property>
           <property name="autoFillBackground">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
           <property name="styleSheet">
            <string notr="true">background-color: rrgb(239, 41, 41);</string>
@@ -1259,7 +1259,7 @@ font: 75 18pt &quot;Noto Sans Glagolitic&quot;;</string>
            <bool>false</bool>
           </property>
           <property name="maximum">
-           <number>60</number>
+           <number>20</number>
           </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>

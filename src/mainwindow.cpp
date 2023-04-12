@@ -189,35 +189,54 @@ void MainWindow::on_contactButton_clicked() {
 
 void MainWindow::startSession(){
     int i= 0;
+    int j=0;
     double achieveSum=0;
-    int currentPace = setting.getPace();
+    int currentPace = 60/setting.getPace();
     testdata *data = new testdata(qrand()%3);
 
-    //Timer
-    QTimer timer;
-    QTimer countdown;
-    int countTime= 10; //change to 100
-    QTimer paceTime;
+    //Slider
+    //paceSlider = new QSlider(Qt::Horizontal, this);
+//    breathPacer->setRange(0,30);//set the min and max vals
+//    breathPacer->setValue(0);
 
-    //set timer display
+    //Timer
+    QTimer timer; //timer for collecting coherence score every 5 secs
+    QTimer countdown; //timer shown in the session that countdown
+    QTimer paceTimer; //timer for collecting breath pace reading according to pace stting (1 - 30 secs)
+    paceTimer.setInterval(currentPace);
+
+    int countTime= 100; //change to 100
+
+    //set session displays
     QLCDNumber *coh = ui->coherence;
     QLCDNumber *ach = ui->achievement;
     QLCDNumber *tracker = ui->timer;
-    QSlider *breathPace = ui ->breathing;
+    QSlider *breathPacer = ui ->breathing; //creates a slider
+
+    breathPacer->setRange(0,20);//set the min and max vals
+    breathPacer->setValue(0);
+
 
     s.setAchievement();
 
     int* graph = data ->getGraph();
     QVector<double> arrScores = data ->getScores();
 
-    startTimer(timer, countdown, paceTime, *tracker, countTime);
+    startTimer(timer, countdown, paceTimer, *tracker, countTime);
 
     coh->display(0);
     ach->display(0);
     QObject::connect(&timer, &QTimer::timeout, [&](){
         updateDisplay(timer, *coh, *ach, arrScores, i, achieveSum);
-
     });
+
+    QObject::connect(&paceTimer, &QTimer::timeout, [&](){
+        updateSlider(paceTimer, *breathPacer, arrScores, j, countTime);
+    });
+    //connect(paceTimer, &QTimer::timeout, this, &MainWindow::updateSlider);
+
+    paceTimer.start(currentPace);
+
 
     QEventLoop l;
     QTimer::singleShot(100000,&l,&QEventLoop::quit);
@@ -310,6 +329,7 @@ void MainWindow::updateMenu(QString option) {
         ui ->mainOptions ->addItem("29");
         ui ->mainOptions ->addItem("30");
         ui ->mainOptions ->setCurrentRow(setting.getPace() - 1);
+        qDebug() << setting.getPace();
     } else if (option == "RESET") {
         ui ->mainOptions ->clear();
         ui ->heading ->setText("ARE YOU SURE YOU WANT TO RESET?");
@@ -359,13 +379,14 @@ void MainWindow::updateMenu(QString option) {
 //starts the timer and updates its display in session
 void MainWindow::startTimer(QTimer& timer, QTimer& countdown, QTimer& bpace, QLCDNumber& tracker, int& countTime) // add timers for graph, breath pace
 {
-    timer.setInterval(5000);
+    timer.setInterval(5000);//5sec interval
     timer.setSingleShot(false);
 
-    countdown.setInterval(1000);
+    countdown.setInterval(1000);//1 sec interval
     tracker.display(countTime);
 
-    bpace.setInterval(setting.getPace());
+    bpace.setInterval(setting.getPace());//gets user's selected seconds interval and collects info for use
+    bpace.setSingleShot(false);
 
     QObject::connect(&countdown, &QTimer::timeout, [&](){
         if(countTime > 0){
@@ -399,7 +420,24 @@ void MainWindow::updateDisplay(QTimer& timer, QLCDNumber& coh, QLCDNumber& ach, 
         qDebug() << "Achievement Sum:" << achieveSum;
         qDebug() << "Timer Up!";
     }
+}
 
+void MainWindow::updateSlider(QTimer& paceTimer, QSlider& paceSlider, QVector<double>&  arrScores, int& j, int& countTime){
+    int value= paceSlider.value();
+    if(j< arrScores.size()){
+        double score= arrScores[j];
+        //qDebug() << value;
+        qDebug() <<j;
+        qDebug() << score;
+        paceSlider.setValue(score);
+        j++;
+    }
+    else{
+        paceTimer.stop();
+        //paceSlider.stop();
+        paceSlider.setDisabled(true);
+        qDebug() <<"done";
+    }
 }
 
 void MainWindow::endSession() {
