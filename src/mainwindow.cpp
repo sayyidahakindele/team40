@@ -181,16 +181,24 @@ void MainWindow::on_backButton_clicked() {
     functionality: simulates connecting/disconnecting measuring gadgets
 */
 void MainWindow::on_contactButton_clicked() {
+    //Timer
+    QTimer timer; //timer for collecting coherence score every 5 secs
+    QTimer countdown; //timer shown in the session that countdown
+
+    QPushButton *hr = ui->contactButton;
+
     if (contact == false) {
         contact = true;
         qDebug() << "Device is now in contact with skin.";
         ui ->saveButton ->setVisible(true);
-        startSession();
+        startSession(timer, countdown);
     } else {
         contact=false;
         ui ->saveButton ->setVisible(false);
         qDebug() << "Device is no longer in contact with skin";
-        //add a disrupt session sonmeehing
+        //add a disrupt session something
+
+
     }
 }
 
@@ -202,23 +210,17 @@ void MainWindow::on_saveButton_clicked() {
     qDebug() << "Session saved";
 }
 
-void MainWindow::startSession(){
+void MainWindow::startSession(QTimer& timer, QTimer& countdown){
     int i= 0;
         int j=0;
         double achieveSum=0;
-        int currentPace = 60/setting.getPace();
+        int getPace = setting.getPace();//value sldier moves every sec  eg. 15 every second
+        int interval= 60/setting.getPace(); //interval it should take to reach in 60 eg 15 the take 4 times to reach full
         testdata *data = new testdata(qrand()%3);
 
-        //Slider
-        //paceSlider = new QSlider(Qt::Horizontal, this);
-    //    breathPacer->setRange(0,30);//set the min and max vals
-    //    breathPacer->setValue(0);
-
-        //Timer
-        QTimer timer; //timer for collecting coherence score every 5 secs
-        QTimer countdown; //timer shown in the session that countdown
-        QTimer paceTimer; //timer for collecting breath pace reading according to pace stting (1 - 30 secs)
-        paceTimer.setInterval(currentPace);
+//        //Timer
+//        QTimer timer; //timer for collecting coherence score every 5 secs
+//        QTimer countdown; //timer shown in the session that countdown
 
         int countTime= 100; //change to 100
 
@@ -228,7 +230,7 @@ void MainWindow::startSession(){
         QLCDNumber *tracker = ui->timer;
         QSlider *breathPacer = ui ->breathing; //creates a slider
 
-        breathPacer->setRange(0,20);//set the min and max vals
+        breathPacer->setRange(0,60);//set the min and max vals
         breathPacer->setValue(0);
 
 
@@ -237,21 +239,19 @@ void MainWindow::startSession(){
         int* graph = data ->getGraph();
         QVector<double> arrScores = data ->getScores();
 
-        startTimer(timer, countdown, paceTimer, *tracker, countTime);
+        startTimer(timer, countdown, *tracker, *breathPacer, countTime, getPace);
+
 
         coh->display(0);
         ach->display(0);
         QObject::connect(&timer, &QTimer::timeout, [&](){
-            updateDisplay(timer, *coh, *ach, arrScores, i, achieveSum);
+            //updateDisplay(timer, *coh, *ach, arrScores, i, achieveSum);
+            updateDisplay(timer, *coh, *ach, arrScores, i, achieveSum, countTime);
         });
 
-        QObject::connect(&paceTimer, &QTimer::timeout, [&](){
-            updateSlider(paceTimer, *breathPacer, arrScores, j, countTime);
-        });
-        //connect(paceTimer, &QTimer::timeout, this, &MainWindow::updateSlider);
-
-        paceTimer.start(currentPace);
-
+//        QObject::connect(&timer, &QTimer::timeout, [&](){
+//            updateSlider(timer, *breathPacer, arrScores, j, countTime);
+//        });
 
         QEventLoop l;
         QTimer::singleShot(100000,&l,&QEventLoop::quit);
@@ -262,7 +262,9 @@ void MainWindow::startSession(){
 
 void MainWindow::endSession() {
     // should only be called to end timer. If saved, done in another button
-    qDebug() << "time ended";
+    qDebug() << "session ended";
+//    timer.stop();
+//    countdown.stop();
 }
 
 /*  changePowerStatus(bool)
@@ -405,25 +407,32 @@ void MainWindow::updateMenu(QString option) {
 }
 
 //starts the timer and updates its display in session
-void MainWindow::startTimer(QTimer& timer, QTimer& countdown, QTimer& bpace, QLCDNumber& tracker, int& countTime) // add timers for graph, breath pace
+void MainWindow::startTimer(QTimer& timer, QTimer& countdown, QLCDNumber& tracker,QSlider& breathPacer, int& countTime, int& getPace) // add timers for graph, breath pace
 {
+    int value= breathPacer.value();
     timer.setInterval(5000);//5sec interval
     timer.setSingleShot(false);
 
     countdown.setInterval(1000);//1 sec interval
     tracker.display(countTime);
 
-    bpace.setInterval(setting.getPace());//gets user's selected seconds interval and collects info for use
-    bpace.setSingleShot(false);
-
     QObject::connect(&countdown, &QTimer::timeout, [&](){
         if(countTime > 0){
             countTime--;
             tracker.display(countTime);
+            value+= getPace;
+            qDebug() << value;
+            breathPacer.setValue(value);
+            if(value > 60){
+                value=0;
+                 breathPacer.setValue(value);
+            }
+            qDebug() << value;
         }
         else{
             countdown.stop();
             timer.stop();
+            //paceTimer.stop();
             qDebug() << "Timer Up!";
         }
     });
@@ -433,16 +442,28 @@ void MainWindow::startTimer(QTimer& timer, QTimer& countdown, QTimer& bpace, QLC
 }
 
 //gets coherence and achievement score and updates the values in the session display
-void MainWindow::updateDisplay(QTimer& timer, QLCDNumber& coh, QLCDNumber& ach, QVector<double>& arrScores, int& i, double& achieveSum)
+//updateDisplay(timer, *coh, *ach, *breatPacer, arrScores, i, achieveSum, countTime);
+void MainWindow::updateDisplay(QTimer& timer, QLCDNumber& coh, QLCDNumber& ach, QVector<double>& arrScores, int& i, double& achieveSum, int& countTime)
 {
+//    int value= breathPacer.value();
     if(i< arrScores.size()){
+//        if(value == 60){
+//            breathPacer.setValue(0);
+//        }
         double score= arrScores[i];
         achieveSum= s.getAchievement(score, achieveSum);
-
+//        qDebug() <<i;
+//        qDebug() << score;
         coh.display(score);
         ach.display(achieveSum);
+//        value+= getPace;
+//        breathPacer.setValue(value);
+//        qDebug() << value;
         updateLights(s.getColor(setting.getLevel(), score));
         i++;
+//        if(value > 60){
+//            breathPacer.setValue(0);
+//        }
     }
     else{
         timer.stop();
@@ -451,7 +472,7 @@ void MainWindow::updateDisplay(QTimer& timer, QLCDNumber& coh, QLCDNumber& ach, 
     }
 }
 
-void MainWindow::updateSlider(QTimer& paceTimer, QSlider& paceSlider, QVector<double>&  arrScores, int& j, int& countTime){
+/*void MainWindow::updateSlider(QTimer& timer, QSlider& paceSlider, QVector<double>&  arrScores, int& j, int& countTime){
     int value= paceSlider.value();
     if(j< arrScores.size()){
         double score= arrScores[j];
@@ -462,12 +483,12 @@ void MainWindow::updateSlider(QTimer& paceTimer, QSlider& paceSlider, QVector<do
         j++;
     }
     else{
-        paceTimer.stop();
+        timer.stop();
         //paceSlider.stop();
         paceSlider.setDisabled(true);
         qDebug() <<"done";
     }
-}
+}*/
 
 //void simulateBreathPace(QTimer& timer, int pace, QSlider& slide) {
 //    qDebug() << "hi";

@@ -25,7 +25,7 @@ public:
     // constructor
     MainWindow(QWidget *parent = nullptr);
 
-   void startSession();
+   void startSession(QTimer& timer, QTimer& countdown);
    void changePowerStatus(bool status);
    void updateMenu(QString option);
    void printHistories();
@@ -33,11 +33,12 @@ public:
    void session(int pace, int level, QMap<int, int>, QVector<double>);
    void beep();
    void endSession();
-   void startTimer(QTimer& timer, QTimer& countdown, QTimer& bpace, QLCDNumber& tracker, int& countTime);
+   void startTimer(QTimer& timer, QTimer& countdown, QLCDNumber& tracker,QSlider& breathPacer, int& countTime, int& getPace);
 
    // session graphics
-   void updateDisplay(QTimer& timer, QLCDNumber& coh, QLCDNumber& ach, QVector<double>& arrScores, int& i, double& achieveSum);
-   void updateSlider(QTimer& paceTimer, QSlider& paceSlider, QVector<double>&  score, int& i, int& countTime);
+   void updateDisplay(QTimer& timer, QLCDNumber& coh, QLCDNumber& ach, QVector<double>& arrScores, int& i, double& achieveSum, int& countTime);
+   //void updateDisplay(QTimer& timer, QLCDNumber& coh, QLCDNumber& ach,QVector<double>& arrScores, int& i, double& achieveSum, int& countTime);
+   //void updateSlider(QTimer& paceTimer, QSlider& paceSlider, QVector<double>&  score, int& i, int& countTime);
    void simulateGraph();
    void updateLights(int color);
    void simulateBreathPace(QTimer& timer, int pace, QSlider& slide);
