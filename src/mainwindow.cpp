@@ -6,6 +6,11 @@
     functionality: sets all buttons and variables to their default
                   displays UI
 */
+
+//Timer
+//QTimer timer; //timer for collecting coherence score every 5 secs
+//QTimer countdown; //timer shown in the session that countdown
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -112,9 +117,10 @@ void MainWindow::on_okButton_clicked() {
     extension: if in session view, stops timer and enables all buttons
 */
 void MainWindow::on_menuButton_clicked() {
-    if (ui ->views ->currentIndex() == 1) {
-        endSession();
-    }
+//    if (ui ->views ->currentIndex() == 1) {
+//        endSession();
+//    }
+    contact= false;
     ui ->views ->setCurrentIndex(0);
     ui ->contactButton ->setVisible(false);
     ui ->saveButton ->setVisible(false);
@@ -181,10 +187,10 @@ void MainWindow::on_backButton_clicked() {
     functionality: simulates connecting/disconnecting measuring gadgets
 */
 void MainWindow::on_contactButton_clicked() {
+
     //Timer
     QTimer timer; //timer for collecting coherence score every 5 secs
     QTimer countdown; //timer shown in the session that countdown
-
     QPushButton *hr = ui->contactButton;
 
     if (contact == false) {
@@ -192,13 +198,17 @@ void MainWindow::on_contactButton_clicked() {
         qDebug() << "Device is now in contact with skin.";
         ui ->saveButton ->setVisible(true);
         startSession(timer, countdown);
+
     } else {
         contact=false;
         ui ->saveButton ->setVisible(false);
         qDebug() << "Device is no longer in contact with skin";
+        //disconnect(ui->contactButton, &QPushButton::clicked, nullptr, nullptr);
+        endSession(timer, countdown);
         //add a disrupt session something
-
-
+//        QObject::connect(hr, &QPushButton::clicked, [=](){
+//            endSession(timer, countdown);
+//        });
     }
 }
 
@@ -217,10 +227,6 @@ void MainWindow::startSession(QTimer& timer, QTimer& countdown){
         int getPace = setting.getPace();//value sldier moves every sec  eg. 15 every second
         int interval= 60/setting.getPace(); //interval it should take to reach in 60 eg 15 the take 4 times to reach full
         testdata *data = new testdata(qrand()%3);
-
-//        //Timer
-//        QTimer timer; //timer for collecting coherence score every 5 secs
-//        QTimer countdown; //timer shown in the session that countdown
 
         int countTime= 100; //change to 100
 
@@ -241,7 +247,6 @@ void MainWindow::startSession(QTimer& timer, QTimer& countdown){
 
         startTimer(timer, countdown, *tracker, *breathPacer, countTime, getPace);
 
-
         coh->display(0);
         ach->display(0);
         QObject::connect(&timer, &QTimer::timeout, [&](){
@@ -249,9 +254,18 @@ void MainWindow::startSession(QTimer& timer, QTimer& countdown){
             updateDisplay(timer, *coh, *ach, arrScores, i, achieveSum, countTime);
         });
 
-//        QObject::connect(&timer, &QTimer::timeout, [&](){
-//            updateSlider(timer, *breathPacer, arrScores, j, countTime);
-//        });
+        QObject::connect(&timer, &QTimer::timeout, [&](){
+            //updateDisplay(timer, *coh, *ach, arrScores, i, achieveSum);
+            updateDisplay(timer, *coh, *ach, arrScores, i, achieveSum, countTime);
+        });
+
+        QObject::connect(ui->contactButton, &QPushButton::clicked, this, [&](){
+            endSession(timer, countdown);
+        });
+
+        QObject::connect(ui->menuButton, &QPushButton::clicked, this, [&](){
+            endSession(timer, countdown);
+        });
 
         QEventLoop l;
         QTimer::singleShot(100000,&l,&QEventLoop::quit);
@@ -260,11 +274,11 @@ void MainWindow::startSession(QTimer& timer, QTimer& countdown){
         contact =false;
 }
 
-void MainWindow::endSession() {
+void MainWindow::endSession(QTimer& timer, QTimer& countdown) {
     // should only be called to end timer. If saved, done in another button
     qDebug() << "session ended";
-//    timer.stop();
-//    countdown.stop();
+    timer.stop();
+    countdown.stop();
 }
 
 /*  changePowerStatus(bool)
