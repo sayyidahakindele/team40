@@ -114,6 +114,8 @@ void MainWindow::on_okButton_clicked() {
 void MainWindow::on_menuButton_clicked() {
     if (ui ->views ->currentIndex() == 1) {
         endSession();
+        contact = false;
+        ui ->contactButton ->setStyleSheet("QPushButton {image: url(:/buttons/disabled.png);background-color: rgb(108, 147, 136); border-radius: 5px;}");
     }
     ui ->views ->setCurrentIndex(0);
     ui ->contactButton ->setVisible(false);
@@ -189,15 +191,16 @@ void MainWindow::on_contactButton_clicked() {
 
     if (contact == false) {
         contact = true;
+        ui ->contactButton ->setStyleSheet("QPushButton {image: url(:/buttons/enabled.png);background-color: rgb(108, 147, 136); border-radius: 5px;}");
         qDebug() << "Device is now in contact with skin.";
         ui ->saveButton ->setVisible(true);
         startSession(timer, countdown);
     } else {
         contact=false;
+        ui ->contactButton ->setStyleSheet("QPushButton {image: url(:/buttons/disabled.png);background-color: rgb(108, 147, 136); border-radius: 5px;}");
         ui ->saveButton ->setVisible(false);
         qDebug() << "Device is no longer in contact with skin";
         //add a disrupt session something
-
 
     }
 }
