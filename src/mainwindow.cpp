@@ -267,6 +267,12 @@ void MainWindow::startSession(QTimer& timer, QTimer& countdown){
             endSession(timer, countdown);
         });
 
+        QObject::connect(ui->saveButton, &QPushButton::clicked, this, [&](){
+            endSession(timer, countdown);
+            //add summary function stuff here to create summary for session
+        });
+
+
         QEventLoop l;
         QTimer::singleShot(100000,&l,&QEventLoop::quit);
         l.exec();
