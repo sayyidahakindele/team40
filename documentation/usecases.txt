@@ -185,3 +185,17 @@ Main Success Scenario
 3.	The device shows the user summary of the session
 Postcondition
 -	Session has been saved to the device’s history.
+
+
+
+
+USE CASE 10: Charging battery
+Primary Actor
+-	Device User
+Precondition
+-	Battery is dead
+-	On control page
+Main Success Scenario
+1.	User presses recharge button
+Postcondition
+-	Device starts back up
