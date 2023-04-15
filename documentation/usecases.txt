@@ -143,33 +143,45 @@ Precondition
 -	Desired challenge level and breath pace has been selected.
 -	User has clicked HRContact button.
 Main Success Scenario
-1. Gadget measures heart rate and outputs heart rate variability graph
-2. Coherence score and achievement is calculated for past 5 seconds
-3. Step 1 and 2 repeated until the session ends or is ended.
+1. 	Gadget measures heart rate and outputs heart rate variability graph
+2. 	Coherence score and achievement is calculated for past 5 seconds
+3. 	Step 1 and 2 repeated until the session ends or is ended.
 Postcondition
 -	Summary of session is displayed
 Extensions
-- 3a. The electrode no longer senses skin.
-- 3a1. Electrode stops outputting an electrical current.
-- 3a2. Device pauses the Time of Therapy display.
-- 3a3. If electrode senses skin once again, return to step 1. Otherwise, end use case.
+3.	The HRContact button ends the session, deleting all memory of current session.
+-	When HRContact button is pressed again, new session is created
+
+
+
+
+
+
+USE CASE 8: End a session
+Primary Actor
+-	Device user
+Precondition
+-	Session currently running
+Main Success Scenario
+1. User presses Save Button
+Postcondition
+-	Graphics and timer stops
 Related Information
-- Use case can be ended at any time if the user presses the Menu button. By doing so, the session will end, and the user will return to the main menu. The session will NOT be saved.
+- 	Use case can be ended at any time if the user presses the Menu button. By doing so, the session will end, and the user will return to the main menu. The session will NOT be saved.
+-	Use case can be ended at any time if the user presses the HRContact button. By doing so, the session will end, and the user will return to the main menu. The session will NOT be saved.
 
 
 
 
 
-
-USE CASE 8: Save a session
+USE CASE 9: Save a session
 Primary Actor
 -	Device User
 Precondition
--	The device is in the middle of a session, or a session has just concluded.
+-	The device is in the middle of a session, or a session has just naturally concluded.
 Main Success Scenario
 1.	User presses Save button.
 2.	The device saves the current session’s information to the log history.
 3.	The device shows the user summary of the session
 Postcondition
 -	Session has been saved to the device’s history.
-

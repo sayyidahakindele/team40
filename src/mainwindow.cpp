@@ -203,17 +203,16 @@ void MainWindow::on_contactButton_clicked() {
         contact = true;
         ui ->contactButton ->setStyleSheet("QPushButton {image: url(:/buttons/enabled.png);background-color: rgb(108, 147, 136); border-radius: 5px;}");
         qDebug() << "Device is now in contact with skin.";
-        ui ->saveButton ->setVisible(false);
+        ui ->saveButton ->setVisible(true);
         startSession(timer, countdown);
 
     } else {
         contact=false;
         ui ->contactButton ->setStyleSheet("QPushButton {image: url(:/buttons/disabled.png);background-color: rgb(108, 147, 136); border-radius: 5px;}");
-        ui ->saveButton ->setVisible(true);
+        ui ->saveButton ->setVisible(false);
         qDebug() << "Device is no longer in contact with skin";
         //disconnect(ui->contactButton, &QPushButton::clicked, nullptr, nullptr);
         endSession(timer, countdown);
-        //add a disrupt session something
     }
 }
 
