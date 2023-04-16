@@ -37,6 +37,7 @@ SOURCES += \
         $${source_dir}/settings.cpp \
         $${source_dir}/loghistory.cpp \
         $${source_dir}/testdata.cpp \
+        $${source_dir}/qcustomplot.cpp \
 
 HEADERS += \
         $${source_dir}/session.h \
@@ -45,6 +46,7 @@ HEADERS += \
         $${source_dir}/settings.h \
         $${source_dir}/loghistory.h \
         $${source_dir}/testdata.h \
+        $${source_dir}/qcustomplot.h \
 
 FORMS += \
         $${forms_dir}/mainwindow.ui
