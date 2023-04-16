@@ -3,7 +3,7 @@
 Members
 -------
 Annabel Esin            101198034
-Ezhill Issac
+Ezhil  Issac            101181468
 Francesca Berkoh
 Sayyidah Akindele       101192813
 
@@ -14,7 +14,7 @@ Annabel
   - Traceability matrix
   - Program Logic
 
-Ezhill
+Ezhil
   - UML diagram
   - Program Logic
 
