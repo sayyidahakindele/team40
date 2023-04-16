@@ -13,6 +13,7 @@
 #include "scores.h"
 #include "settings.h"
 #include "testdata.h"
+#include "qcustomplot.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -59,6 +60,7 @@ private slots:
     void on_backButton_clicked();
     void on_contactButton_clicked();
     void on_saveButton_clicked();
+    void update_graph();
 
 private:
     Ui::MainWindow *ui;
@@ -67,6 +69,9 @@ private:
     settings setting;
     loghistory log;
     scores s;
+    testdata *data;
+    int runTime = 0;
+    double PI = 3.14;
 };
 #endif // MAINWINDOW_H
 
