@@ -311,6 +311,10 @@ void MainWindow::startSession(QTimer& timer, QTimer& countdown){
             endSession(timer, countdown);
             //add summary function stuff here to create summary for session
         });
+    
+        //updating the graph using the 1-second timer
+        QObject:: connect(&countdown, SIGNAL(timeout()), this, SLOT(update_graph()));
+        ui->graph_2->addGraph();
 
 
         QEventLoop l;
@@ -507,6 +511,45 @@ void MainWindow::updateLights(int color) {
     } else if (color == 3) {
         ui ->coherenceLevel ->setStyleSheet("QLabel { color: green; background-color: green}");
     }
+}
+
+/*updateGraph()
+ * --------------------------------
+ * functionality: uses the generated graph values and updates the graph throughout the session
+*/
+
+void MainWindow::update_graph()
+{
+    runTime++;
+    //used to store the x and y values of the graph
+    QVector<double> x(101), y(101);
+
+    //getting the data generated for the graph
+    int* graphData = data ->getGraph();
+
+    //storing the x and y values in the vector
+    double xVal = 0;
+    for(int i = 0; i < runTime; i++)
+    {
+       if(i == 0)
+            x[i] = 0;
+       else
+         x[i] = xVal+= PI/4;
+
+       y[i] = graphData[i];
+
+    }
+
+
+    ui->graph_2->graph(0)->setData(x, y);
+    // give the axes some labels:
+    ui->graph_2->xAxis->setLabel("x");
+    ui->graph_2->yAxis->setLabel("y");
+    // set axes ranges, so we see all data:
+    ui->graph_2->xAxis->setRange(0, runTime); //sets the range of the x axis--doesn't draw the line
+    ui->graph_2->yAxis->setRange(0, 100);
+    ui->graph_2->replot();
+
 }
 
 
