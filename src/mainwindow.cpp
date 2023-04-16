@@ -37,7 +37,7 @@ MainWindow::~MainWindow() {
 void MainWindow::drainBattery() {
 
     int currentPercentage = ui->battery->value();
-    ui->battery->setValue(currentPercentage - 20);
+    ui->battery->setValue(currentPercentage - 3);
     qDebug() << "Should be draining battery";
 
     // it shoud power down the device instead of just stopping the session
@@ -268,7 +268,7 @@ void MainWindow::startSession(QTimer& timer, QTimer& countdown){
         double achieveSum=0;
         int getPace = setting.getPace();//value sldier moves every sec  eg. 15 every second
         int interval= 60/setting.getPace(); //interval it should take to reach in 60 eg 15 the take 4 times to reach full
-        testdata *data = new testdata(qrand()%3);
+        data = new testdata(rand() % 3);
 
         int countTime= 100; //change to 100
 

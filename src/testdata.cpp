@@ -20,9 +20,9 @@ testdata::testdata(int number) {
 void testdata::low() {
     for (int i = 0; i < 100; ++i) {
         if (i%2 == 0) {
-            graph[i] = rand() % 30;
+            graph[i] = rand() % 30 + 1;
         } else {
-            graph[i] = rand() % 100; // 0 - 100
+            graph[i] = rand() % 100 + 1; // 0 - 100
         }
     }
 }
@@ -32,7 +32,7 @@ void testdata::medium() {
         if (i%2 == 0) {
             graph[i] = rand() % 50;
         } else {
-            graph[i] = rand() % 11 + 90; // 90 -100
+            graph[i] = rand() % 11 + 90; // 90 - 100
         }
     }
 }
