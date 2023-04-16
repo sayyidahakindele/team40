@@ -5,7 +5,7 @@
 class loghistory {
     public:
         loghistory();
-        // session* getSummaries()
+        QList<QString> logs;
         // printSummary(int): call getters from session
         // delete
         // delete all
