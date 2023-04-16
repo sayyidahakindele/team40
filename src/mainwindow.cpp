@@ -7,10 +7,6 @@
                   displays UI
 */
 
-//Timer
-//QTimer timer; //timer for collecting coherence score every 5 secs
-//QTimer countdown; //timer shown in the session that countdown
-
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -224,6 +220,10 @@ void MainWindow::on_saveButton_clicked() {
     qDebug() << "Session saved";
 }
 
+/*  startSession()
+    -----------------------------
+    functionality: simulates the start of a session
+*/
 void MainWindow::startSession(QTimer& timer, QTimer& countdown){
     int i= 0;
         int j=0;
@@ -254,12 +254,10 @@ void MainWindow::startSession(QTimer& timer, QTimer& countdown){
         coh->display(0);
         ach->display(0);
         QObject::connect(&timer, &QTimer::timeout, [&](){
-            //updateDisplay(timer, *coh, *ach, arrScores, i, achieveSum);
             updateDisplay(timer, *coh, *ach, arrScores, i, achieveSum, countTime);
         });
 
         QObject::connect(&timer, &QTimer::timeout, [&](){
-            //updateDisplay(timer, *coh, *ach, arrScores, i, achieveSum);
             updateDisplay(timer, *coh, *ach, arrScores, i, achieveSum, countTime);
         });
 
@@ -284,6 +282,10 @@ void MainWindow::startSession(QTimer& timer, QTimer& countdown){
         contact =false;
 }
 
+/*  endSession()
+    -----------------------------
+    functionality: stops the active session and ongoing timers
+*/
 void MainWindow::endSession(QTimer& timer, QTimer& countdown) {
     // should only be called to end timer. If saved, done in another button
     qDebug() << "session ended";
@@ -430,7 +432,10 @@ void MainWindow::updateMenu(QString option) {
     }
 }
 
-//starts the timer and updates its display in session
+/*  startTimer
+    -----------------------------
+    functionality: starts the timers and updates its display in session. Also updates the breath pacer every sec.
+*/
 void MainWindow::startTimer(QTimer& timer, QTimer& countdown, QLCDNumber& tracker,QSlider& breathPacer, int& countTime, int& getPace) // add timers for graph, breath pace
 {
     int value= breathPacer.value();
@@ -465,29 +470,19 @@ void MainWindow::startTimer(QTimer& timer, QTimer& countdown, QLCDNumber& tracke
     timer.start();
 }
 
-//gets coherence and achievement score and updates the values in the session display
-//updateDisplay(timer, *coh, *ach, *breatPacer, arrScores, i, achieveSum, countTime);
+/*  updateDisplay()
+    -----------------------------
+    functionality: updates the various metrics in the session display(coherence, achievement score)
+*/
 void MainWindow::updateDisplay(QTimer& timer, QLCDNumber& coh, QLCDNumber& ach, QVector<double>& arrScores, int& i, double& achieveSum, int& countTime)
 {
-//    int value= breathPacer.value();
     if(i< arrScores.size()){
-//        if(value == 60){
-//            breathPacer.setValue(0);
-//        }
         double score= arrScores[i];
         achieveSum= s.getAchievement(score, achieveSum);
-//        qDebug() <<i;
-//        qDebug() << score;
         coh.display(score);
         ach.display(achieveSum);
-//        value+= getPace;
-//        breathPacer.setValue(value);
-//        qDebug() << value;
         updateLights(s.getColor(setting.getLevel(), score));
         i++;
-//        if(value > 60){
-//            breathPacer.setValue(0);
-//        }
     }
     else{
         timer.stop();
@@ -495,28 +490,6 @@ void MainWindow::updateDisplay(QTimer& timer, QLCDNumber& coh, QLCDNumber& ach, 
         qDebug() << "Timer Up!";
     }
 }
-
-/*void MainWindow::updateSlider(QTimer& timer, QSlider& paceSlider, QVector<double>&  arrScores, int& j, int& countTime){
-    int value= paceSlider.value();
-    if(j< arrScores.size()){
-        double score= arrScores[j];
-        //qDebug() << value;
-        qDebug() <<j;
-        qDebug() << score;
-        paceSlider.setValue(score);
-        j++;
-    }
-    else{
-        timer.stop();
-        //paceSlider.stop();
-        paceSlider.setDisabled(true);
-        qDebug() <<"done";
-    }
-}*/
-
-//void simulateBreathPace(QTimer& timer, int pace, QSlider& slide) {
-//    qDebug() << "hi";
-//}
 
 /*  updateLights()
     -----------------------------

@@ -1,14 +1,26 @@
 #include "scores.h"
 
+/*  setAchievement()
+    -----------------------------
+    functionality: sets the achievement score to 0
+*/
 double scores::setAchievement(){
     achieveScore=0;
 }
 
+/*  getAchievement()
+    -----------------------------
+    functionality: gets the coherence score, adds it to the sum value and returns it
+*/
 double scores::getAchievement(double coherence, double& sum){
     sum +=  coherence;
     return sum;
 }
 
+/*  getColor()
+    -----------------------------
+    functionality:
+*/
 int scores::getColor(int level, double coherence) {
     double low;
     double high;

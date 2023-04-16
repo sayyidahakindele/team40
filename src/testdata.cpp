@@ -47,6 +47,11 @@ void testdata::high() {
     }
 }
 
+/*  lowCoherence()
+    -----------------------------
+    functionality: an array of low coherence scores
+*/
+
 void testdata::lowCoherence() {
     scores.append(0.21);
     scores.append(0.42);
@@ -70,6 +75,10 @@ void testdata::lowCoherence() {
     scores.append(0.23);
 }
 
+/*  mediumCoherence()
+    -----------------------------
+    functionality: an array of medium coherence scores
+*/
 void testdata::mediumCoherence() {
     scores.append(1.34);
     scores.append(1.75);
@@ -93,6 +102,10 @@ void testdata::mediumCoherence() {
     scores.append(2.57);
 }
 
+/*  highCoherence()
+    -----------------------------
+    functionality: an array of high coherence scores
+*/
 void testdata::highCoherence() {
     scores.append(3.65);
     scores.append(4.20);
@@ -116,10 +129,18 @@ void testdata::highCoherence() {
     scores.append(14.23);
 }
 
+/*  getGraph()
+    -----------------------------
+    functionality: gets the graph
+*/
 int* testdata::getGraph() {
     return graph;
 }
 
+/*  getSCores()
+    -----------------------------
+    functionality: gets the coherence scores
+*/
 QVector<double> testdata::getScores() {
     return scores;
 }

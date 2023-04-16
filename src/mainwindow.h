@@ -37,8 +37,6 @@ public:
 
    // session graphics
    void updateDisplay(QTimer& timer, QLCDNumber& coh, QLCDNumber& ach, QVector<double>& arrScores, int& i, double& achieveSum, int& countTime);
-   //void updateDisplay(QTimer& timer, QLCDNumber& coh, QLCDNumber& ach,QVector<double>& arrScores, int& i, double& achieveSum, int& countTime);
-   //void updateSlider(QTimer& paceTimer, QSlider& paceSlider, QVector<double>&  score, int& i, int& countTime);
    void simulateGraph();
    void updateLights(int color);
    void simulateBreathPace(QTimer& timer, int pace, QSlider& slide);
