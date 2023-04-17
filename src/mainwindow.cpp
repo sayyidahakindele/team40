@@ -41,7 +41,7 @@ MainWindow::~MainWindow() {
 
 void MainWindow::drainBattery() {
     int currentPercentage = ui->battery->value();
-    ui->battery->setValue(currentPercentage - 20);
+    ui->battery->setValue(currentPercentage - 1);
 
     if (ui->battery->value() == 0) {                                // powers down the device even in session
         batteryTimer->stop();

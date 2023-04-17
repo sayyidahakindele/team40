@@ -38,7 +38,6 @@ SOURCES += \
         $${source_dir}/qcustomplot.cpp \
 
 HEADERS += \
-        $${source_dir}/session.h \
         $${source_dir}/mainwindow.h \
         $${source_dir}/scores.h \
         $${source_dir}/settings.h \
