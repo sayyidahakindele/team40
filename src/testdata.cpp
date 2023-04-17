@@ -17,6 +17,10 @@ testdata::testdata(int number) {
     }
 }
 
+/*  low()
+    -----------------------------
+    functionality: populate the "graph" array with random low coherence values
+*/
 void testdata::low() {
     for (int i = 0; i < 100; ++i) {
         if (i%2 == 0) {
@@ -27,6 +31,10 @@ void testdata::low() {
     }
 }
 
+/*  medium()
+    -----------------------------
+    functionality: populate the "graph" array with random medium coherence values
+*/
 void testdata::medium() {
     for (int i = 0; i < 100; ++i) {
         if (i%2 == 0) {
@@ -37,6 +45,10 @@ void testdata::medium() {
     }
 }
 
+/*  high()
+    -----------------------------
+    functionality: populate the "graph" array with random high coherence values
+*/
 void testdata::high() {
     for (int i = 0; i < 100; ++i) {
         if (i%2 == 0) {
@@ -51,7 +63,6 @@ void testdata::high() {
     -----------------------------
     functionality: an array of low coherence scores
 */
-
 void testdata::lowCoherence() {
     scores.append(0.21);
     scores.append(0.42);

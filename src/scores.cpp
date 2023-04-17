@@ -19,7 +19,7 @@ double scores::getAchievement(double coherence, double& sum){
 
 /*  getColor()
     -----------------------------
-    functionality:
+    functionality: returns the colour respondence relating the coherence score and set challenge level
 */
 int scores::getColor(int level, double coherence) {
     double low;

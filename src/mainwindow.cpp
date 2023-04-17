@@ -39,6 +39,10 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
+/*  drainBattery()
+    -----------------------------
+    functionality: simulates the draining of the battery as it is in use until it gets depleted
+*/
 void MainWindow::drainBattery() {
     int currentPercentage = ui->battery->value();
     ui->battery->setValue(currentPercentage - 1);
@@ -510,8 +514,8 @@ void MainWindow::updateLights(int color) {
 }
 
 /*updateGraph()
- * --------------------------------
- * functionality: uses the generated graph values and updates the graph throughout the session
+  --------------------------------
+  functionality: uses the generated graph values and updates the graph throughout the session
 */
 void MainWindow::update_graph()
 {
@@ -546,6 +550,10 @@ void MainWindow::update_graph()
 
 }
 
+/*returnToMain()
+  --------------------------------
+  functionality: resets the main menu of the application, preparing it for user interaction.
+*/
 void MainWindow::returnToMain() {
     ui ->mainOptions ->clear();
     QListWidgetItem *session = new QListWidgetItem("CREATE NEW SESSION");
@@ -562,6 +570,10 @@ void MainWindow::returnToMain() {
 }
 
 
+/*on_rechargeButton()
+  --------------------------------
+  functionality: recharges the battery and resets it to back to full battery 100%
+*/
 void MainWindow::on_rechargeButton_clicked() {
     qDebug() << "Charging";
     ui->battery->setValue(100);
