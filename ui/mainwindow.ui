@@ -456,25 +456,6 @@ QPushButton:pressed {
           <string/>
          </property>
         </widget>
-        <widget class="QProgressBar" name="battery">
-         <property name="geometry">
-          <rect>
-           <x>70</x>
-           <y>20</y>
-           <width>41</width>
-           <height>23</height>
-          </rect>
-         </property>
-         <property name="value">
-          <number>100</number>
-         </property>
-         <property name="invertedAppearance">
-          <bool>false</bool>
-         </property>
-         <property name="format">
-          <string>%p%</string>
-         </property>
-        </widget>
         <widget class="QWidget" name="gridLayoutWidget">
          <property name="geometry">
           <rect>
@@ -612,6 +593,38 @@ border-radius: 5px;
           </item>
          </layout>
         </widget>
+        <widget class="QWidget" name="verticalLayoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>60</x>
+           <y>10</y>
+           <width>71</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QProgressBar" name="battery">
+            <property name="value">
+             <number>100</number>
+            </property>
+            <property name="invertedAppearance">
+             <bool>false</bool>
+            </property>
+            <property name="format">
+             <string>%p%</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="rechargeButton">
+            <property name="text">
+             <string>RECHARGE</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
         <zorder>menuButton</zorder>
         <zorder>downButton</zorder>
         <zorder>backButton</zorder>
@@ -619,8 +632,8 @@ border-radius: 5px;
         <zorder>upButton</zorder>
         <zorder>leftButton</zorder>
         <zorder>rightButton</zorder>
-        <zorder>battery</zorder>
         <zorder>gridLayoutWidget</zorder>
+        <zorder>verticalLayoutWidget</zorder>
        </widget>
       </item>
       <item>

@@ -30,12 +30,10 @@ resources_dir = res
 QMAKE_CLEAN += denas.db
 
 SOURCES += \
-        $${source_dir}/session.cpp \
         $${source_dir}/main.cpp \
         $${source_dir}/mainwindow.cpp \
         $${source_dir}/scores.cpp \
         $${source_dir}/settings.cpp \
-        $${source_dir}/loghistory.cpp \
         $${source_dir}/testdata.cpp \
         $${source_dir}/qcustomplot.cpp \
 

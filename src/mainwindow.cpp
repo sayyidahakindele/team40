@@ -6,12 +6,14 @@
     functionality: sets all buttons and variables to their default
                   displays UI
 */
-
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    //default settings
     power = false;
     contact = false;
+
     ui ->views ->setCurrentIndex(0);
     ui ->views ->setVisible(false);
     ui ->battery ->setVisible(false);
@@ -24,6 +26,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui ->backButton ->setEnabled(false);
     ui ->contactButton ->setVisible(false);
     ui ->saveButton ->setVisible(false);
+    ui ->rechargeButton ->setVisible(false);
+
+    returnToMain();
 }
 
 /*  ~MainWindow()
@@ -35,40 +40,19 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::drainBattery() {
-
     int currentPercentage = ui->battery->value();
-    ui->battery->setValue(currentPercentage - 3);
-    qDebug() << "Should be draining battery";
+    ui->battery->setValue(currentPercentage - 20);
 
-    // it shoud power down the device instead of just stopping the session
-    if (ui->battery->value() == 0) {
+    if (ui->battery->value() == 0) {                                // powers down the device even in session
         batteryTimer->stop();
-        qDebug() << "Battery Died. Session ending.";
-
+        qDebug() << "Battery died: Please recharge.";
         if (ui->views->currentIndex() == 1 && contact == true) {
             ui->contactButton->click();
-            //remove hr, save,
-            //show recharge button
         }
-
         power = false;
+        ui ->rechargeButton ->setVisible(true);
         changePowerStatus(power);
     }
-}
-
-void MainWindow::returnToMain() {
-    ui ->mainOptions ->clear();
-    QListWidgetItem *session = new QListWidgetItem("CREATE NEW SESSION");
-    QListWidgetItem *settings = new QListWidgetItem("SETTINGS");
-    QListWidgetItem *history = new QListWidgetItem("HISTORY");
-    QListWidgetItem *reset = new QListWidgetItem("RESET");
-    ui ->mainOptions ->addItem(session);
-    ui ->mainOptions ->addItem(settings);
-    ui ->mainOptions ->addItem(history);
-    ui ->mainOptions ->addItem(reset);
-    ui ->mainOptions ->setCurrentRow(0);
-    ui ->views ->setCurrentIndex(0);
-    ui ->heading ->setText("MAIN MENU");
 }
 
 /*  on_menuButton_clicked()
@@ -79,19 +63,18 @@ void MainWindow::returnToMain() {
 void MainWindow::on_powerButton_clicked() {
     if (power == true) {
         power = false;
-
         ui ->contactButton ->setVisible(false);
+        ui ->rechargeButton ->setVisible(true);
         ui ->mainOptions ->clear();
     } else {
         power = true;
-        returnToMain();
-
+        ui ->menuButton ->click();
+        ui ->rechargeButton ->setVisible(false);
         batteryTimer = new QTimer(this);
         connect(batteryTimer, &QTimer::timeout, this, &MainWindow::drainBattery);
-        batteryTimer->start(10000); //decrements battery every 10 seconds
+        batteryTimer->start(10000); //decreases battery every 10 seconds
     }
     changePowerStatus(power);
-
 }
 
 /*  on_upButton_clicked()
@@ -146,6 +129,7 @@ void MainWindow::on_okButton_clicked() {
     extension: if in session view, stops timer and enables all buttons
 */
 void MainWindow::on_menuButton_clicked() {
+    // resets all session graphics
     if (ui ->views ->currentIndex() == 1) {
         contact = false;
         ui ->contactButton ->setStyleSheet("QPushButton {image: url(:/buttons/disabled.png);background-color: rgb(108, 147, 136); border-radius: 5px;}");
@@ -154,8 +138,10 @@ void MainWindow::on_menuButton_clicked() {
         ui ->achievement ->display(0);
         ui ->breathing ->setValue(0);
         ui ->coherenceLevel ->setStyleSheet("background-color: rrgb(239, 41, 41);");
-        // rest graph
+        // reset graph
     }
+
+    // enables all controls
     ui ->views ->setCurrentIndex(0);
     ui ->contactButton ->setVisible(false);
     ui ->saveButton ->setVisible(false);
@@ -203,7 +189,6 @@ void MainWindow::on_backButton_clicked() {
     functionality: simulates connecting/disconnecting measuring gadgets
 */
 void MainWindow::on_contactButton_clicked() {
-
     //Timer
     QTimer timer; //timer for collecting coherence score every 5 secs
     QTimer countdown; //timer shown in the session that countdown
@@ -212,7 +197,7 @@ void MainWindow::on_contactButton_clicked() {
     if (contact == false) {
         contact = true;
         ui ->contactButton ->setStyleSheet("QPushButton {image: url(:/buttons/enabled.png);background-color: rgb(108, 147, 136); border-radius: 5px;}");
-        qDebug() << "Device is now in contact with skin.";
+        qDebug() << "Device now in contact with skin.";
         ui ->saveButton ->setVisible(true);
         startSession(timer, countdown);
 
@@ -220,8 +205,7 @@ void MainWindow::on_contactButton_clicked() {
         contact=false;
         ui ->contactButton ->setStyleSheet("QPushButton {image: url(:/buttons/disabled.png);background-color: rgb(108, 147, 136); border-radius: 5px;}");
         ui ->saveButton ->setVisible(false);
-        qDebug() << "Device is no longer in contact with skin";
-        //disconnect(ui->contactButton, &QPushButton::clicked, nullptr, nullptr);
+        qDebug() << "Device no longer in contact with skin";
         endSession(timer, countdown);
     }
 }
@@ -231,31 +215,44 @@ void MainWindow::on_contactButton_clicked() {
     functionality: saves session and takes you the summary of the session
 */
 void MainWindow::on_saveButton_clicked() {
-    qDebug() << "Session saved - WEIRD FUNC";
+    qDebug() << "Session saved";
 
-    int sessionLength = 100 - ui->timer->intValue();
-    int achievementScore = ui->achievement->intValue();
-
-    QString challengeLevel = QString::number(setting.getLevel());
-    QString averageCoherence = QString::number(achievementScore/(sessionLength/5));
+    // getting summary details
+    int sessionLength = 100 - ui ->timer ->value();
+    QString id = QString::number(log.logs.count() + 1);
+    QString challengeLevel;
+    if (setting.getLevel() == 1) {
+      challengeLevel = "BEGINNER";
+    } else if (setting.getLevel() == 2) {
+        challengeLevel = "INTERMEDIATE";
+    } else if (setting.getLevel() == 3) {
+        challengeLevel = "HARD";
+    } else {
+        challengeLevel = "ADVANCED";
+    }
+    QString averageCoherence = QString::number(ui ->coherence ->value()/sessionLength);
     QString coherenceLevelPercentages = "";
 
-    QMessageBox msgBox;
-    QString summary = "Session Length: " + QString::number(sessionLength) + " seconds"
-                      + "\nChallenge Level: " + challengeLevel
-                      + "\nAchievement Score: " + QString::number(achievementScore)
-                      + "\nAverage Coherence: " + averageCoherence
-                      + "\nCoherence Level Percentages: " + coherenceLevelPercentages;
+    // creates summary
+    QString summary = "SESSION: " + id
+                      + "\n     Session Length: " + QString::number(sessionLength) + " seconds"
+                      + "\n     Challenge Level: " + challengeLevel
+                      + "\n     Achievement Score: " + QString::number(ui ->achievement ->value())
+                      + "\n     Average Coherence: " + averageCoherence
+                      + "\n     Coherence Level Percentages: " + coherenceLevelPercentages;
     log.logs.append(summary);
 
-    msgBox.setText(summary );
-    msgBox.setStandardButtons(QMessageBox::Ok);
-    msgBox.setWindowModality(Qt::ApplicationModal);
-
-    QString styleSheet = "QMessageBox { background-color: black; border: 2px solid white; color: white; }";
-
-    msgBox.setStyleSheet(styleSheet);
-    msgBox.exec();
+    // takes user to summary and resets all controls
+    contact = false;
+    ui ->contactButton ->setStyleSheet("QPushButton {image: url(:/buttons/disabled.png);background-color: rgb(108, 147, 136); border-radius: 5px;}");
+    ui ->views ->setCurrentIndex(0);
+    ui ->mainOptions ->clear();
+    ui ->heading ->setText("ALL SESSIONS");
+    foreach(QString summary, log.logs) {
+        ui ->mainOptions ->addItem(summary);
+    }
+    ui ->mainOptions ->setCurrentRow(log.logs.count() - 1);
+    changePowerStatus(true);
 }
 
 /*  startSession()
@@ -263,20 +260,21 @@ void MainWindow::on_saveButton_clicked() {
     functionality: simulates the start of a session
 */
 void MainWindow::startSession(QTimer& timer, QTimer& countdown){
+    qDebug() << "Session started";
     int i= 0;
-        int j=0;
-        double achieveSum=0;
-        int getPace = setting.getPace();//value sldier moves every sec  eg. 15 every second
-        int interval= 60/setting.getPace(); //interval it should take to reach in 60 eg 15 the take 4 times to reach full
-        data = new testdata(rand() % 3);
+    int j=0;
+    double achieveSum=0;
+    int getPace = setting.getPace();        //value sldier moves every sec  eg. 15 every second
+    int interval= 60/setting.getPace();     //interval it should take to reach in 60 eg 15 the take 4 times to reach full
+    data = new testdata(rand() % 3);
 
-        int countTime= 100; //change to 100
+    int countTime= 100; //change to 100
 
-        //set session displays
-        QLCDNumber *coh = ui->coherence;
-        QLCDNumber *ach = ui->achievement;
-        QLCDNumber *tracker = ui->timer;
-        QSlider *breathPacer = ui ->breathing; //creates a slider
+    //set session displays
+    QLCDNumber *coh = ui->coherence;
+    QLCDNumber *ach = ui->achievement;
+    QLCDNumber *tracker = ui->timer;
+    QSlider *breathPacer = ui ->breathing; //creates a slider
 
         breathPacer->setRange(0,60);//set the min and max vals
         breathPacer->setValue(0);
@@ -329,7 +327,6 @@ void MainWindow::startSession(QTimer& timer, QTimer& countdown){
     functionality: stops the active session and ongoing timers
 */
 void MainWindow::endSession(QTimer& timer, QTimer& countdown) {
-    // should only be called to end timer. If saved, done in another button
     qDebug() << "session ended";
     timer.stop();
     countdown.stop();
@@ -349,6 +346,8 @@ void MainWindow::changePowerStatus(bool status) {
     ui ->menuButton ->setEnabled(status);
     ui ->okButton ->setEnabled(status);
     ui ->backButton ->setEnabled(status);
+    ui ->saveButton ->setVisible(false);
+    ui ->contactButton ->setVisible(false);
 }
 
 /*  updateMenu(QString)
@@ -359,7 +358,6 @@ void MainWindow::updateMenu(QString option) {
     if (option == "CREATE NEW SESSION") {
         ui ->contactButton ->setVisible(true);
         ui ->views ->setCurrentIndex(1);
-        ui ->battery ->setVisible(false);
         ui ->upButton ->setEnabled(false);
         ui ->downButton ->setEnabled(false);
         ui ->leftButton ->setEnabled(false);
@@ -407,7 +405,6 @@ void MainWindow::updateMenu(QString option) {
         ui ->mainOptions ->addItem("YES");
         ui ->mainOptions ->addItem("NO");
         ui ->mainOptions ->setCurrentRow(0);
-
     } else if (option == "CLEAR") {
         ui ->mainOptions ->clear();
         ui ->heading ->setText("ARE YOU SURE YOU WANT TO CLEAR ALL?");
@@ -428,7 +425,6 @@ void MainWindow::updateMenu(QString option) {
     } else if (option == "VIEW") {
         ui ->mainOptions ->clear();
         ui ->heading ->setText("ALL SESSIONS");
-
         if (log.logs.isEmpty()){
             ui ->mainOptions ->addItem("EMPTY");
         } else {
@@ -436,7 +432,7 @@ void MainWindow::updateMenu(QString option) {
                 ui ->mainOptions ->addItem(summary);
             }
         }
-
+        ui ->mainOptions ->setCurrentRow(0);
     }
 }
 
@@ -517,7 +513,6 @@ void MainWindow::updateLights(int color) {
  * --------------------------------
  * functionality: uses the generated graph values and updates the graph throughout the session
 */
-
 void MainWindow::update_graph()
 {
     runTime++;
@@ -540,7 +535,6 @@ void MainWindow::update_graph()
 
     }
 
-
     ui->graph_2->graph(0)->setData(x, y);
     // give the axes some labels:
     ui->graph_2->xAxis->setLabel("x");
@@ -552,6 +546,25 @@ void MainWindow::update_graph()
 
 }
 
+void MainWindow::returnToMain() {
+    ui ->mainOptions ->clear();
+    QListWidgetItem *session = new QListWidgetItem("CREATE NEW SESSION");
+    QListWidgetItem *settings = new QListWidgetItem("SETTINGS");
+    QListWidgetItem *history = new QListWidgetItem("HISTORY");
+    QListWidgetItem *reset = new QListWidgetItem("RESET");
+    ui ->mainOptions ->addItem(session);
+    ui ->mainOptions ->addItem(settings);
+    ui ->mainOptions ->addItem(history);
+    ui ->mainOptions ->addItem(reset);
+    ui ->mainOptions ->setCurrentRow(0);
+    ui ->views ->setCurrentIndex(0);
+    ui ->heading ->setText("MAIN MENU");
+}
 
 
-
+void MainWindow::on_rechargeButton_clicked() {
+    qDebug() << "Charging";
+    ui->battery->setValue(100);
+    qDebug() << "Charged";
+    ui ->powerButton ->setEnabled(true);
+}
