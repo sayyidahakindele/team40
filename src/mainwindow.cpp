@@ -235,7 +235,17 @@ void MainWindow::on_saveButton_clicked() {
         challengeLevel = "ADVANCED";
     }
     QString averageCoherence = QString::number(ui ->coherence ->value()/sessionLength);
-    QString coherenceLevelPercentages = "";
+    QString coherenceLevelPercentages;
+    int sessionCoherence = qrand() % 3;
+    if (sessionCoherence == 0) {
+        coherenceLevelPercentages = "              low - 78%\n              medium - 16%\n              high - 6%";
+    } else if (sessionCoherence == 1) {
+        coherenceLevelPercentages = "              low - 23%\n              medium - 68%\n              high - 9%";
+    } else if (sessionCoherence == 2) {
+        coherenceLevelPercentages = "              low - 2%\n               medium - 23%\n              high - 75%";
+    }
+
+
 
     // creates summary
     QString summary = "SESSION: " + id
@@ -243,7 +253,7 @@ void MainWindow::on_saveButton_clicked() {
                       + "\n     Challenge Level: " + challengeLevel
                       + "\n     Achievement Score: " + QString::number(ui ->achievement ->value())
                       + "\n     Average Coherence: " + averageCoherence
-                      + "\n     Coherence Level Percentages: " + coherenceLevelPercentages;
+                      + "\n     Coherence Level Percentages: \n" + coherenceLevelPercentages;
     log.logs.append(summary);
 
     // takes user to summary and resets all controls
