@@ -143,7 +143,7 @@ void MainWindow::on_menuButton_clicked() {
         ui ->achievement ->display(0);
         ui ->breathing ->setValue(0);
         ui ->coherenceLevel ->setStyleSheet("background-color: rrgb(239, 41, 41);");
-        // reset graph
+        clear_graph();
     }
 
     // enables all controls
@@ -160,7 +160,6 @@ void MainWindow::on_menuButton_clicked() {
     ui ->okButton ->setEnabled(true);
     ui ->backButton ->setEnabled(true);
 
-    clear_graph();
     returnToMain();
 }
 
@@ -247,8 +246,6 @@ void MainWindow::on_saveButton_clicked() {
         coherenceLevelPercentages = "              low - 2%\n               medium - 23%\n              high - 75%";
     }
 
-    clear_graph();
-
     // creates summary
     QString summary = "SESSION: " + id
                       + "\n     Session Length: " + QString::number(sessionLength) + " seconds"
@@ -260,6 +257,13 @@ void MainWindow::on_saveButton_clicked() {
 
     // takes user to summary and resets all controls
     contact = false;
+    ui ->contactButton ->setStyleSheet("QPushButton {image: url(:/buttons/disabled.png);background-color: rgb(108, 147, 136); border-radius: 5px;}");
+    ui ->timer ->display(100);
+    ui ->coherence ->display(0);
+    ui ->achievement ->display(0);
+    ui ->breathing ->setValue(0);
+    ui ->coherenceLevel ->setStyleSheet("background-color: rrgb(239, 41, 41);");
+    clear_graph();
     ui ->contactButton ->setStyleSheet("QPushButton {image: url(:/buttons/disabled.png);background-color: rgb(108, 147, 136); border-radius: 5px;}");
     ui ->views ->setCurrentIndex(0);
     ui ->mainOptions ->clear();
@@ -410,11 +414,10 @@ void MainWindow::updateMenu(QString option) {
     } else if (option == "CHANGE BREATH PACE") {
         ui ->mainOptions ->clear();
         ui ->heading ->setText("SETTINGS");
-        for(int i = 0; i <= 30; i++){
-            ui ->mainOptions ->addItem(QString::number(i));
+        for(int i = 0; i < 30; i++){
+            ui ->mainOptions ->addItem(QString::number(i+1));
         }
         ui ->mainOptions ->setCurrentRow(setting.getPace() - 1);
-        qDebug() << setting.getPace();
     } else if (option == "RESET") {
         ui ->mainOptions ->clear();
         ui ->heading ->setText("ARE YOU SURE YOU WANT TO RESET?");
@@ -430,7 +433,6 @@ void MainWindow::updateMenu(QString option) {
     } else if (option == "YES" && ui ->heading->text() == "ARE YOU SURE YOU WANT TO CLEAR ALL?") {
         log.logs.clear();
         returnToMain();
-        qDebug() << log.logs;
     }
     else if(option == "YES" && ui ->heading->text() == "ARE YOU SURE YOU WANT TO RESET?"){
         log.logs.clear();
@@ -470,13 +472,11 @@ void MainWindow::startTimer(QTimer& timer, QTimer& countdown, QLCDNumber& tracke
             countTime--;
             tracker.display(countTime);
             value+= getPace;
-            qDebug() << value;
             breathPacer.setValue(value);
             if(value > 60){
                 value=0;
                  breathPacer.setValue(value);
             }
-            qDebug() << value;
         }
         else{
             countdown.stop();
@@ -506,7 +506,6 @@ void MainWindow::updateDisplay(QTimer& timer, QLCDNumber& coh, QLCDNumber& ach, 
     }
     else{
         timer.stop();
-        qDebug() << "Achievement Sum:" << achieveSum;
         qDebug() << "Timer Up!";
     }
 }
@@ -553,8 +552,8 @@ void MainWindow::update_graph()
 
     ui->graph_2->graph(0)->setData(x, y);
     // give the axes some labels:
-    ui->graph_2->xAxis->setLabel("x");
-    ui->graph_2->yAxis->setLabel("y");
+    ui->graph_2->xAxis->setLabel("time/seconds");
+    ui->graph_2->yAxis->setLabel("heart rate");
     // set axes ranges, so we see all data:
     ui->graph_2->xAxis->setRange(0, runTime); //sets the range of the x axis--doesn't draw the line
     ui->graph_2->yAxis->setRange(0, 100);

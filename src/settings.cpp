@@ -37,6 +37,6 @@ int settings::getLevel() {
     functionality: resets the breathing pace and challenge level to default of 1 and 10 respectively
 */
 void settings::reset() {
-    pace = 1;
-    level = 10;
+    pace = 10;
+    level = 1;
 }
