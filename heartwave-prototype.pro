@@ -23,27 +23,26 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG += c++11
 
-source_dir = src
 forms_dir = ui
 resources_dir = res
 
 QMAKE_CLEAN += denas.db
 
 SOURCES += \
-        $${source_dir}/main.cpp \
-        $${source_dir}/mainwindow.cpp \
-        $${source_dir}/scores.cpp \
-        $${source_dir}/settings.cpp \
-        $${source_dir}/testdata.cpp \
-        $${source_dir}/qcustomplot.cpp \
+        main.cpp \
+        mainwindow.cpp \
+        scores.cpp \
+        settings.cpp \
+        testdata.cpp \
+        qcustomplot.cpp \
 
 HEADERS += \
-        $${source_dir}/mainwindow.h \
-        $${source_dir}/scores.h \
-        $${source_dir}/settings.h \
-        $${source_dir}/loghistory.h \
-        $${source_dir}/testdata.h \
-        $${source_dir}/qcustomplot.h \
+        mainwindow.h \
+        scores.h \
+        settings.h \
+        loghistory.h \
+        testdata.h \
+        qcustomplot.h \
 
 FORMS += \
         $${forms_dir}/mainwindow.ui
