@@ -56,6 +56,7 @@ void MainWindow::drainBattery() {
         power = false;
         ui ->rechargeButton ->setVisible(true);
         changePowerStatus(power);
+        clear_graph();
     }
 }
 
@@ -159,6 +160,7 @@ void MainWindow::on_menuButton_clicked() {
     ui ->okButton ->setEnabled(true);
     ui ->backButton ->setEnabled(true);
 
+    clear_graph();
     returnToMain();
 }
 
@@ -245,7 +247,7 @@ void MainWindow::on_saveButton_clicked() {
         coherenceLevelPercentages = "              low - 2%\n               medium - 23%\n              high - 75%";
     }
 
-
+    clear_graph();
 
     // creates summary
     QString summary = "SESSION: " + id
@@ -589,4 +591,22 @@ void MainWindow::on_rechargeButton_clicked() {
     ui->battery->setValue(100);
     qDebug() << "Charged";
     ui ->powerButton ->setEnabled(true);
+}
+
+
+/*clear_graph()
+ * --------------------------------
+ * functionality: clears the already plotted graph and resets it for the next use
+*/
+void MainWindow::clear_graph()
+{
+    //resetting values
+    runTime = 0;
+    QVector<double> x(101), y(101);
+    ui->graph_2->graph(0)->setData(x, y);
+
+    // set axes ranges, so we see all data:
+    ui->graph_2->xAxis->setRange(0, runTime);
+    ui->graph_2->yAxis->setRange(0, 100);
+    ui->graph_2->replot();
 }
