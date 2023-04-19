@@ -597,9 +597,9 @@ border-radius: 5px;
          <property name="geometry">
           <rect>
            <x>60</x>
-           <y>10</y>
+           <y>0</y>
            <width>71</width>
-           <height>51</height>
+           <height>58</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout">
@@ -1408,6 +1408,10 @@ QSlider::handle:horizontal {
             <width>471</width>
             <height>291</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(108, 147, 136);
+</string>
           </property>
          </widget>
          <zorder>graph</zorder>
