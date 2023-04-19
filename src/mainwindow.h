@@ -55,7 +55,7 @@ class MainWindow : public QMainWindow {
         void on_contactButton_clicked();
         void on_saveButton_clicked();
         void update_graph();
-
+        void clear_graph();
         void on_rechargeButton_clicked();
 
 private:
