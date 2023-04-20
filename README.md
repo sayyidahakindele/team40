@@ -112,7 +112,7 @@ FILE ORGANISATION
 - testdata.cpp
 - testdata.h
 
-INSTRUCTION
+INSTRUCTIONS
 -----------------
 1. Open QT creator and choose 'Open Project' from the file menu.
 2. Select the project file with the .pro extension.
