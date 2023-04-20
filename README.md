@@ -1,6 +1,6 @@
 # team40-> HEART WAVE
 
-Members
+MEMBERS
 -------
 Annabel Esin                    101198034
 
@@ -11,7 +11,7 @@ Francesca Berkoh
 Sayyidah Akindele               101192813
 
 
-Division of labour
+DIVISION OF LABOUR
 ------------------
 Annabel
   - Traceability matrix
@@ -30,7 +30,7 @@ Sayyidah
   - UI
 
 
-Selectable options
+SELECTABLE OPTIONS
 ------------------
 - Create new options
 - Settings
@@ -61,8 +61,8 @@ Selectable options
   - No
 
 
-Interactable elements
----------------------
+INTERACTIVE OPTIONS
+-------------------
 - BACK button
 - MENU button
 - UP button
@@ -72,7 +72,7 @@ Interactable elements
 - OK button
 - POWER button
 
-File organisation
+FILE ORGANISATION
 -----------------
 - documentation
   - UML diagram
@@ -112,7 +112,7 @@ File organisation
 - testdata.cpp
 - testdata.h
 
-Running a session
+INSTRUCTION
 -----------------
 1. Open QT creator and choose 'Open Project' from the file menu.
 2. Select the project file with the .pro extension.
