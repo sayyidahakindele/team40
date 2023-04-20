@@ -2,10 +2,13 @@
 
 Members
 -------
-Annabel Esin            101198034
-Ezhil  Issac            101181468
+Annabel Esin                    101198034
+
+Ezhil  Issac                    101181468
+
 Francesca Berkoh
-Sayyidah Akindele       101192813
+
+Sayyidah Akindele               101192813
 
 
 Division of labour
@@ -71,11 +74,48 @@ Interactable elements
 
 File organisation
 -----------------
+- documentation
+  - UML diagram
+  - Traceability matrix
+  - Use case diagram
+  - Use cases
+  - Sequence diagrams
+- res
+  - buttons
+    - backButton
+    - menuButton
+    - upButton
+    - downButton
+    - leftButton
+    - rightButton
+    - oKButton
+    - saveButton
+    - disabled
+    - enabled
+    - poweButton
+  - denas.qrc
+- ui
+  - mainwindow.ui
+- README.md
+- heartwave-prototype.pro
+- heartwave-prototype.pro.user
+- loghistory.h
+- main.cpp
+- mainwindow.cpp
+- mainwindow.h
+- qcustomplot.cpp
+- qcustomplot.h
+- scores.cpp
+- scores.h
+- settings.cpp
+- settings.h
+- testdata.cpp
+- testdata.h
 
 Running a session
 -----------------
 1. Open QT creator and choose 'Open Project' from the file menu.
 2. Select the project file with the .pro extension.
-3. Clean the project before running to ensure no errors by right clickign the 'heartwave-prototype[master]' header folder and selectign the 'Clean' option. 
-4. Compile the code by clicking on the 'build' button in the bottom left corner.
-5. Then run the program by clicking on the 'run' button. This should launch an interactable platform for you to interact with the interface. 
+3. Compile the code by clicking on the 'build' button in the bottom left corner.
+4. Then run the program by clicking on the 'run' button. This should launch an interactable platform for you to interact with the interface.
+  - If errors occur, please Clean the code and attempt to run again
