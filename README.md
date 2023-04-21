@@ -30,6 +30,10 @@ Sayyidah
   - UI
 
 
+DESIGN PATTERN
+------------------
+-Observer Design Pattern 
+
 SELECTABLE OPTIONS
 ------------------
 - Create new options
