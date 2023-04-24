@@ -44,19 +44,22 @@ MainWindow::~MainWindow() {
     functionality: simulates the draining of the battery as it is in use until it gets depleted
 */
 void MainWindow::drainBattery() {
-    int currentPercentage = ui->battery->value();
-    ui->battery->setValue(currentPercentage - 1);
+    if (ui ->views ->isVisible() == true) {
+        int currentPercentage = ui->battery->value();
+        ui->battery->setValue(currentPercentage - 1); //add functionality to menu class
 
-    if (ui->battery->value() == 0) {                                // powers down the device even in session
-        batteryTimer->stop();
-        qDebug() << "Battery died: Please recharge.";
-        if (ui->views->currentIndex() == 1 && contact == true) {
-            ui->contactButton->click();
+        if (ui->battery->value() == 0) {                                // powers down the device even in session
+            batteryTimer->stop();
+            qDebug() << "Battery died: Please recharge.";
+            if (ui->views->currentIndex() == 1 && contact == true) {
+                ui->contactButton->click();
+                clear_graph();
+            }
+            power = false;
+            ui ->rechargeButton ->setVisible(true);
+            changePowerStatus(power);
+            ui ->powerButton ->setEnabled(false);
         }
-        power = false;
-        ui ->rechargeButton ->setVisible(true);
-        changePowerStatus(power);
-        clear_graph();
     }
 }
 
@@ -179,13 +182,8 @@ void MainWindow::on_backButton_clicked() {
         ui ->mainOptions ->setCurrentRow(0);
     } else if (currentTab == "CHANGE CHALLENGE LEVEL" | currentTab == "VIEW" | currentTab == "YES" | currentTab == "NO") {
         returnToMain();
-    } else {
-        ui ->mainOptions ->clear();
-        QListWidgetItem *view = new QListWidgetItem("VIEW");
-        QListWidgetItem *clear = new QListWidgetItem("CLEAR");
-        ui ->mainOptions ->addItem(view);
-        ui ->mainOptions ->addItem(clear);
-        ui ->mainOptions ->setCurrentRow(0);
+    }  else {
+        returnToMain();
     }
 }
 
@@ -590,6 +588,8 @@ void MainWindow::on_rechargeButton_clicked() {
     ui->battery->setValue(100);
     qDebug() << "Charged";
     ui ->powerButton ->setEnabled(true);
+    power = true;
+    changePowerStatus(true);
 }
 
 

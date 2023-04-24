@@ -597,7 +597,7 @@ border-radius: 5px;
          <property name="geometry">
           <rect>
            <x>60</x>
-           <y>0</y>
+           <y>60</y>
            <width>71</width>
            <height>58</height>
           </rect>
@@ -652,7 +652,7 @@ background-color: rgb(108, 147, 140);</string>
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <property name="elideMode">
          <enum>Qt::ElideNone</enum>
