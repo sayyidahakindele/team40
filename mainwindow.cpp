@@ -54,6 +54,14 @@ void MainWindow::drainBattery() {
             if (ui->views->currentIndex() == 1 && contact == true) {
                 ui->contactButton->click();
                 clear_graph();
+                
+                contact = false;
+                ui ->contactButton ->setStyleSheet("QPushButton {image: url(:/buttons/disabled.png);background-color: rgb(108, 147, 136); border-radius: 5px;}");
+                ui ->timer ->display(100);
+                ui ->coherence ->display(0);
+                ui ->achievement ->display(0);
+                ui ->breathing ->setValue(0);
+                ui ->coherenceLevel ->setStyleSheet("background-color: rrgb(239, 41, 41);");
             }
             power = false;
             ui ->rechargeButton ->setVisible(true);
@@ -542,7 +550,7 @@ void MainWindow::update_graph()
        if(i == 0)
             x[i] = 0;
        else
-         x[i] = xVal+= PI/4;
+         x[i] = xVal+= 1;
 
        y[i] = graphData[i];
 
@@ -590,6 +598,13 @@ void MainWindow::on_rechargeButton_clicked() {
     ui ->powerButton ->setEnabled(true);
     power = true;
     changePowerStatus(true);
+    
+    batteryTimer = new QTimer(this);
+    connect(batteryTimer, &QTimer::timeout, this, &MainWindow::drainBattery);
+    batteryTimer->start(10000);
+
+    //to return to the main menu
+    returnToMain();
 }
 
 
