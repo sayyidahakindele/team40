@@ -46,7 +46,7 @@ MainWindow::~MainWindow() {
 void MainWindow::drainBattery() {
     if (ui ->views ->isVisible() == true) {
         int currentPercentage = ui->battery->value();
-        ui->battery->setValue(currentPercentage - 50); //add functionality to menu class
+        ui->battery->setValue(currentPercentage - 1); //add functionality to menu class
 
         if (ui->battery->value() == 0) {                                // powers down the device even in session
             batteryTimer->stop();
